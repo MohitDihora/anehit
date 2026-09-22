@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { projects } from '../data/projects';
 import { 
   ExternalLink, 
   ArrowUpRight, 
@@ -9,25 +8,27 @@ import {
   Cpu, 
   Globe, 
   Layout, 
-  CheckCircle2 
+  CheckCircle2,
+  FolderSearch
 } from 'lucide-react';
 import ProjectMockupRenderer from '../components/ui/ProjectMockupRenderer';
 import ScrollStack, { ScrollStackItem } from '../components/ui/ScrollStack';
+import { projects, matchesProjectCategory } from '../data/projects';
 
 export default function WorkPage() {
   const [activeFilter, setActiveFilter] = useState('All');
 
   const categories = [
-    { id: 'All', label: 'All Projects', count: 6, icon: Sparkles },
-    { id: 'AI', label: 'AI Applications', count: 2, icon: Cpu },
-    { id: 'Web Apps', label: 'Web Apps', count: 2, icon: Globe },
-    { id: 'Full Stack', label: 'Full Stack', count: 2, icon: Layers },
-    { id: 'Business Websites', label: 'Brand Sites', count: 1, icon: Layout },
+    { id: 'All', label: 'All Case Studies', count: projects.length, icon: Sparkles },
+    { id: 'AI', label: 'AI Applications', count: projects.filter((p) => matchesProjectCategory(p, 'AI')).length, icon: Cpu },
+    { id: 'Web Apps', label: 'Web Apps', count: projects.filter((p) => matchesProjectCategory(p, 'Web Apps')).length, icon: Globe },
+    { id: 'Full Stack', label: 'Full Stack', count: projects.filter((p) => matchesProjectCategory(p, 'Full Stack')).length, icon: Layers },
+    { id: 'Business Websites', label: 'Brand Sites', count: projects.filter((p) => matchesProjectCategory(p, 'Business Websites')).length, icon: Layout },
   ];
 
   const filteredProjects = activeFilter === 'All'
     ? projects
-    : projects.filter((p) => p.filterCategory === activeFilter);
+    : projects.filter((p) => matchesProjectCategory(p, activeFilter));
 
   return (
     <div className="py-12 sm:py-16 md:py-24 bg-blueprint">
@@ -35,14 +36,14 @@ export default function WorkPage() {
         {/* Page Header */}
         <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-mono text-sky-700 mb-4 shadow-xs font-semibold">
-            <span className="w-2 h-2 rounded-full bg-sky-600 animate-pulse" />
-            <span>STUDIO PORTFOLIO // REAL IMPLEMENTATIONS</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>VERIFIED CASE STUDIES & PRODUCTION BUILDS</span>
           </div>
           <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-slate-950 tracking-tight mb-4 leading-tight">
-            Selected Work & Production Deployments
+            Selected Case Studies & Live Deployments
           </h1>
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-            Real software we have designed, architected, and deployed. Explore live applications, interactive prototypes, and technical architectures with transparent deliverables.
+            Explore real software products we have designed, architected, and shipped. Review the real-world engineering challenges, our technical solutions, and verified production outcomes.
           </p>
         </div>
 
@@ -75,17 +76,45 @@ export default function WorkPage() {
           </div>
         </div>
 
-        {/* Projects Showcase - Caspian-Style Animated Stacking Deck */}
-        <ScrollStack
-          key={activeFilter}
-          itemDistance={40}
-          itemScale={0.025}
-          itemStackDistance={24}
-          stackPosition="12%"
-          scaleEndPosition="6%"
-          baseScale={0.92}
-          useWindowScroll={true}
-        >
+        {filteredProjects.length === 0 ? (
+          <div className="py-14 sm:py-18 px-6 sm:px-10 rounded-2xl bg-white border border-slate-200/90 shadow-sm max-w-xl mx-auto text-center space-y-4 my-8 reveal-init" data-reveal>
+            <div className="w-14 h-14 rounded-2xl bg-sky-50 border border-sky-100 text-sky-600 mx-auto flex items-center justify-center shadow-2xs">
+              <FolderSearch className="w-7 h-7" />
+            </div>
+
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-amber-50 text-amber-800 border border-amber-200 text-xs font-mono font-bold uppercase tracking-wider">
+                <span>0 Case Studies Found</span>
+              </div>
+              <h3 className="font-display font-bold text-xl sm:text-2xl text-slate-900 tracking-tight">
+                No Case Studies Found in this Category
+              </h3>
+              <p className="text-slate-600 text-sm leading-relaxed max-w-md mx-auto">
+                No case studies were found matching the <strong className="text-slate-950 font-semibold font-mono">"{categories.find(c => c.id === activeFilter)?.label || activeFilter}"</strong> filter.
+              </p>
+            </div>
+
+            <div className="pt-2 flex justify-center">
+              <button
+                onClick={() => setActiveFilter('All')}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-slate-950 hover:bg-sky-600 text-white text-xs font-semibold transition-all shadow-xs cursor-pointer active:scale-95"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-sky-400" />
+                <span>Show All Case Studies ({projects.length})</span>
+              </button>
+            </div>
+          </div>
+        ) : (
+          <ScrollStack
+            key={activeFilter}
+            itemDistance={40}
+            itemScale={0.025}
+            itemStackDistance={24}
+            stackPosition="12%"
+            scaleEndPosition="6%"
+            baseScale={0.92}
+            useWindowScroll={true}
+          >
           {filteredProjects.map((project, index) => {
             const isEven = index % 2 === 1;
             const projectNumber = String(index + 1).padStart(2, '0');
@@ -101,7 +130,7 @@ export default function WorkPage() {
                   <div className={`space-y-5 lg:col-span-5 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
                     <div className="flex flex-wrap items-center gap-2.5">
                       <span className="font-mono text-xs font-bold text-sky-800 bg-sky-50 border border-sky-200 px-3 py-1 rounded-lg">
-                        PROJECT {projectNumber}
+                        CASE STUDY {projectNumber}
                       </span>
                       <span className="studio-badge bg-slate-100 text-slate-800 border-slate-200 text-xs font-semibold py-1">
                         {project.category}
@@ -157,10 +186,10 @@ export default function WorkPage() {
                     {/* Action Links */}
                     <div className="flex flex-wrap items-center gap-4 pt-5 border-t border-slate-100">
                       <Link
-                        to={`/work/${project.id}`}
+                        to={`/case-studies/${project.id}`}
                         className="inline-flex items-center gap-1.5 text-sm font-bold text-sky-700 hover:text-sky-900 transition-colors py-2"
                       >
-                        <span>Full Project Architecture →</span>
+                        <span>Full Case Study Architecture →</span>
                       </Link>
 
                       {project.liveUrl && (
@@ -187,6 +216,7 @@ export default function WorkPage() {
             );
           })}
         </ScrollStack>
+        )}
 
       </div>
     </div>

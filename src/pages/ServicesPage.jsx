@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useMemo } from 'react';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { services } from '../data/services';
 import { 
   CheckCircle2, 
   ArrowUpRight, 
+  ArrowLeft,
   Code2, 
   Smartphone, 
   ShoppingBag, 
@@ -16,18 +17,24 @@ import {
   LayoutDashboard, 
   Wrench,
   Globe,
-  Layers,
+  Search,
   Zap,
-  ChevronRight,
-  ChevronLeft,
-  SlidersHorizontal
+  Check,
+  Mail,
+  ShieldAlert,
+  Clock,
+  Layers,
+  Calendar,
+  X
 } from 'lucide-react';
-import ServiceCardVisual from '../components/ui/ServiceCardVisual';
 
 export default function ServicesPage() {
+  const { serviceId } = useParams();
+  const [searchParams] = useSearchParams();
+  const targetServiceId = serviceId || searchParams.get('service');
+
   const [activeCategory, setActiveCategory] = useState('All');
-  const [selectedServiceId, setSelectedServiceId] = useState(services[0].id);
-  const [viewMode, setViewMode] = useState('console'); // 'console' (zero-scroll split workbench) | 'grid' (compact grid)
+  const [searchQuery, setSearchQuery] = useState('');
 
   const iconMap = {
     '01': Code2,
@@ -44,416 +51,634 @@ export default function ServicesPage() {
   };
 
   const categoryMap = {
-    '01': 'Core',
-    '02': 'Core',
-    '03': 'Commerce-Platforms',
-    '04': 'Commerce-Platforms',
-    '05': 'AI-Security',
-    '06': 'AI-Security',
-    '07': 'AI-Security',
-    '08': 'AI-Security',
-    '09': 'Commerce-Platforms',
-    '10': 'Core',
-    '11': 'Core',
+    '01': 'Core Software',
+    '02': 'Core Software',
+    '03': 'Platforms & Commerce',
+    '04': 'Platforms & Commerce',
+    '05': 'Platforms & Commerce',
+    '06': 'AI & Security',
+    '07': 'AI & Security',
+    '08': 'AI & Security',
+    '09': 'Platforms & Commerce',
+    '10': 'Core Software',
+    '11': 'Core Software',
   };
 
   const categories = [
-    { id: 'All', label: 'All 11 Disciplines', count: 11 },
-    { id: 'Core', label: 'Core Software & Architecture', count: 4 },
-    { id: 'AI-Security', label: 'AI, Security & Communication', count: 4 },
-    { id: 'Commerce-Platforms', label: 'E-Commerce & Platforms', count: 3 },
+    { id: 'All', label: 'All Services', count: 11 },
+    { id: 'Core Software', label: 'Core Software', count: 4 },
+    { id: 'AI & Security', label: 'AI & Security', count: 3 },
+    { id: 'Platforms & Commerce', label: 'Platforms & Commerce', count: 4 },
   ];
 
-  const filteredServices = activeCategory === 'All'
-    ? services
-    : services.filter(s => categoryMap[s.number] === activeCategory);
+  // Check if a specific service is selected
+  const selectedService = useMemo(() => {
+    if (!targetServiceId) return null;
+    return services.find(s => s.id === targetServiceId);
+  }, [targetServiceId]);
 
-  // If currently selected service is filtered out, fall back to first in filtered list
-  const activeService = filteredServices.find(s => s.id === selectedServiceId) || filteredServices[0] || services[0];
-  const activeIndex = services.findIndex(s => s.id === activeService.id);
-  const ActiveIcon = iconMap[activeService.number] || Globe;
+  // Filtered by category and search for directory view
+  const filteredServices = useMemo(() => {
+    return services.filter((service) => {
+      const matchesCategory = activeCategory === 'All' || categoryMap[service.number] === activeCategory;
+      const matchesSearch = 
+        service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        service.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        service.technologies.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
+      return matchesCategory && matchesSearch;
+    });
+  }, [activeCategory, searchQuery]);
 
-  const handleNext = () => {
-    const nextIndex = (activeIndex + 1) % services.length;
-    setSelectedServiceId(services[nextIndex].id);
-  };
+  // =========================================================================
+  // VIEW A: DEDICATED BALANCED SPLIT VIEW (Clean, Left & Right Covered, No Switch Section)
+  // =========================================================================
+  if (selectedService) {
+    const Icon = iconMap[selectedService.number] || Globe;
+    const categoryName = categoryMap[selectedService.number];
 
-  const handlePrev = () => {
-    const prevIndex = (activeIndex - 1 + services.length) % services.length;
-    setSelectedServiceId(services[prevIndex].id);
-  };
+    return (
+      <div className="min-h-screen bg-blueprint">
 
-  return (
-    <div className="py-10 sm:py-14 md:py-20 bg-blueprint min-h-screen">
-      <div className="studio-container">
-        
-        {/* Centered Page Header */}
-        <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-mono text-sky-700 mb-3.5 shadow-2xs font-semibold">
-            <span className="w-2 h-2 rounded-full bg-sky-600 animate-pulse" />
-            <span>FULL-SPECTRUM SOFTWARE DISCIPLINES</span>
-          </div>
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-slate-950 tracking-tight mb-3.5 leading-tight">
-            Engineering Services Built for Real Outcomes
-          </h1>
-          <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-            Explore all 11 disciplines below. Select any discipline on the left to view its live telemetry simulator, deliverables, and technical architecture in place without endless scrolling.
-          </p>
-        </div>
-
-        {/* Category Filter & View Mode Controls */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 sm:mb-10">
-          
-          {/* Category Filter Pills */}
-          <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-white border border-slate-200 shadow-2xs overflow-x-auto no-scrollbar max-w-full">
-            {categories.map((cat) => {
-              const isActive = activeCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => {
-                    setActiveCategory(cat.id);
-                    const newFiltered = cat.id === 'All' ? services : services.filter(s => categoryMap[s.number] === cat.id);
-                    if (newFiltered.length > 0) {
-                      setSelectedServiceId(newFiltered[0].id);
-                    }
-                  }}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap cursor-pointer ${
-                    isActive
-                      ? 'bg-slate-950 text-white shadow-sm'
-                      : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100'
-                  }`}
-                >
-                  <span>{cat.label}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-md font-mono ${
-                    isActive ? 'bg-slate-800 text-sky-300' : 'bg-slate-100 text-slate-500'
-                  }`}>
-                    {cat.count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* View Switcher: Interactive Console (Zero Scroll) vs Grid Matrix */}
-          <div className="inline-flex items-center p-1 rounded-xl bg-white border border-slate-200 shadow-2xs shrink-0">
-            <button
-              onClick={() => setViewMode('console')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                viewMode === 'console'
-                  ? 'bg-sky-50 text-sky-700 border border-sky-200 font-bold'
-                  : 'text-slate-600 hover:text-slate-950'
-              }`}
-            >
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>Interactive Stage (Zero Scroll)</span>
-            </button>
-            <button
-              onClick={() => setViewMode('grid')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                viewMode === 'grid'
-                  ? 'bg-sky-50 text-sky-700 border border-sky-200 font-bold'
-                  : 'text-slate-600 hover:text-slate-950'
-              }`}
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Full Grid ({filteredServices.length})</span>
-            </button>
-          </div>
-
-        </div>
-
-        {/* VIEW MODE 1: Interactive Split-Stage Architecture Console (Zero Endless Scrolling) */}
-        {viewMode === 'console' && (
-          <div className="rounded-[32px] bg-white border border-slate-200 shadow-sm overflow-hidden mb-14 transition-all duration-300">
+        {/* Balanced Two-Column Studio Layout */}
+        <div className="studio-container py-8 sm:py-10 md:py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            {/* Top Command Bar */}
-            <div className="px-6 sm:px-8 py-3.5 bg-slate-950 text-white flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-              <div className="flex items-center gap-2 text-slate-300">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                <span className="text-sky-300 font-bold uppercase tracking-wider">
-                  DISCIPLINE {activeService.number} OF 11 // LIVE STUDIO WORKBENCH
-                </span>
-              </div>
+            {/* =================================================== */}
+            {/* LEFT COLUMN: Main Overview, Trust & Actions         */}
+            {/* =================================================== */}
+            <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
               
-              {/* Quick Arrow Stepper */}
-              <div className="flex items-center gap-3">
-                <span className="text-slate-400 font-mono text-[11px] hidden sm:inline">
-                  Use arrows to switch:
-                </span>
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={handlePrev}
-                    aria-label="Previous discipline"
-                    className="w-7 h-7 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <span className="font-mono text-xs text-sky-400 px-2 font-bold">
-                    {activeService.number} / 11
-                  </span>
-                  <button
-                    onClick={handleNext}
-                    aria-label="Next discipline"
-                    className="w-7 h-7 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Split Stage: Left Discipline Directory + Right Live Stage */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[580px]">
-              
-              {/* Left Column: Vertical Discipline Navigator Rail */}
-              <div className="lg:col-span-5 bg-slate-50/70 border-b lg:border-b-0 lg:border-r border-slate-200 p-3 sm:p-4 space-y-1.5 overflow-y-auto max-h-[620px]">
-                <div className="px-3 pt-1 pb-2 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
-                  <span>Select Discipline:</span>
-                  <span className="text-sky-700">{filteredServices.length} Available</span>
-                </div>
-
-                {filteredServices.map((service) => {
-                  const isSelected = service.id === activeService.id;
-                  const Icon = iconMap[service.number] || Globe;
-
-                  return (
-                    <button
-                      key={service.id}
-                      onClick={() => setSelectedServiceId(service.id)}
-                      className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-all duration-200 cursor-pointer ${
-                        isSelected
-                          ? 'bg-slate-950 text-white shadow-md scale-[1.01]'
-                          : 'hover:bg-white hover:border-slate-200 text-slate-700'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-colors shadow-2xs ${
-                          isSelected 
-                            ? 'bg-sky-500 text-white' 
-                            : 'bg-white border border-slate-200 text-slate-600'
-                        }`}>
-                          <Icon className="w-4 h-4" />
-                        </div>
-                        <div className="truncate">
-                          <div className="flex items-center gap-1.5">
-                            <span className={`text-[10px] font-mono font-bold ${isSelected ? 'text-sky-300' : 'text-slate-400'}`}>
-                              {service.number}
-                            </span>
-                            <span className="font-display font-bold text-sm tracking-tight truncate">
-                              {service.title}
-                            </span>
-                          </div>
-                          <div className={`text-xs truncate font-normal ${isSelected ? 'text-slate-300' : 'text-slate-500'}`}>
-                            {service.shortDescription}
-                          </div>
-                        </div>
-                      </div>
-
-                      <ChevronRight className={`w-4 h-4 shrink-0 transition-transform ${
-                        isSelected ? 'text-sky-400 translate-x-0.5' : 'text-slate-300 opacity-40'
-                      }`} />
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Right Column: Live Interactive Focus Stage (Telemetry HUD + Deliverables + CTA) */}
-              <div className="lg:col-span-7 p-6 sm:p-8 md:p-10 flex flex-col justify-between bg-white space-y-6">
+              {/* Primary Service Card */}
+              <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-6 reveal-init" data-reveal>
                 
-                {/* Discipline Header & Identity */}
-                <div>
-                  <div className="flex flex-wrap items-center gap-2.5 mb-3">
-                    <span className="font-mono text-xs font-bold text-sky-800 bg-sky-50 border border-sky-200 px-3 py-1 rounded-lg">
-                      DISCIPLINE {activeService.number}
+                {/* Header Tag Bar with Back Arrow */}
+                <div className="flex items-center justify-between gap-2 pb-4 border-b border-slate-100">
+                  <div className="flex items-center gap-2.5">
+                    <Link
+                      to="/services"
+                      className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-950 border border-slate-200 transition-all group shrink-0"
+                      title="Back to All Services"
+                      aria-label="Back to All Services"
+                    >
+                      <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5 text-slate-700" />
+                    </Link>
+
+                    <span className="font-mono text-xs font-bold text-slate-900 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-md">
+                      SERVICE {selectedService.number}
                     </span>
-                    <span className="text-xs font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg">
-                      Production Verified
+                    <span className="font-mono text-xs font-medium text-sky-700 bg-sky-50 border border-sky-200/80 px-2.5 py-1 rounded-md">
+                      {categoryName}
                     </span>
                   </div>
-
-                  <h2 className="font-display font-bold text-2xl sm:text-3xl text-slate-950 tracking-tight mb-3">
-                    {activeService.title}
-                  </h2>
-
-                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-5 font-normal">
-                    {activeService.fullDescription}
-                  </p>
-
-                  {/* Ideal Application Highlight Box */}
-                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 mb-6">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1 flex items-center gap-1.5 font-mono">
-                      <Zap className="w-3.5 h-3.5 text-sky-600" />
-                      <span>Ideal Business Application</span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-                      {activeService.idealFor}
-                    </p>
-                  </div>
-
-                  {/* Live Animated Telemetry HUD Simulator */}
-                  <div className="mb-6">
-                    <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center justify-between">
-                      <span>Architecture & Telemetry Simulator</span>
-                      <span className="text-sky-700 text-[11px] font-mono font-semibold">LIVE HUD</span>
-                    </div>
-                    <ServiceCardVisual serviceNumber={activeService.number} />
-                  </div>
-
-                  {/* Deliverables Checklist */}
-                  <div className="mb-6">
-                    <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5">
-                      Included Deliverables:
-                    </div>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {activeService.deliverables.map((del, i) => (
-                        <li
-                          key={i}
-                          className="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50/80 border border-slate-200/80 text-xs text-slate-700 font-medium"
-                        >
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                          <span className="leading-snug">{del}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Tech Stack Badges */}
-                  <div>
-                    <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                      Engineered With:
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {activeService.technologies.map((tech, idx) => (
-                        <span
-                          key={idx}
-                          className="text-xs font-semibold px-3 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-800"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                  
+                  <div className="w-11 h-11 rounded-xl bg-slate-950 text-sky-400 flex items-center justify-center shrink-0 shadow-sm border border-slate-800 transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-[0_8px_20px_rgba(56,189,248,0.25)] hover:border-sky-500/50 active:scale-95 cursor-pointer">
+                    <Icon className="w-5 h-5 transition-transform duration-300 hover:scale-110" />
                   </div>
                 </div>
 
-                {/* Bottom Action Strip */}
-                <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+                {/* Title & Human Description */}
+                <div>
+                  <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-950 tracking-tight leading-snug">
+                    {selectedService.title}
+                  </h1>
+                  <p className="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed font-normal">
+                    {selectedService.fullDescription}
+                  </p>
+                </div>
+
+                {/* Who This Is Best For Box */}
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 reveal-init stagger-2">
+                  <div className="flex items-center gap-1.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+                    <Zap className="w-3.5 h-3.5 text-sky-600" />
+                    <span>Who This Is Best For</span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
+                    {selectedService.idealFor}
+                  </p>
+                </div>
+
+                {/* Clear Guarantees */}
+                <div className="space-y-2 pt-1 border-t border-slate-100 text-xs font-mono text-slate-600 reveal-init stagger-3">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>100% Full Source Code Ownership</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
+                    <span>Direct Access to Senior Developer</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0" />
+                    <span>Fixed-Price Milestones with Zero Surprises</span>
+                  </div>
+                </div>
+
+                {/* Direct Action CTAs */}
+                <div className="pt-2 space-y-2.5 reveal-init stagger-4">
                   <Link
-                    to={`/contact?service=${encodeURIComponent(activeService.title)}`}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-950 hover:bg-sky-600 text-white font-semibold text-sm transition-all shadow-sm active:scale-98"
+                    to={`/contact?service=${encodeURIComponent(selectedService.title)}`}
+                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-950 hover:bg-sky-600 text-white font-semibold text-sm transition-all shadow-md active:scale-98"
                   >
-                    <span>Scope a {activeService.title} Project</span>
+                    <span>Get a Free Quote for This Service</span>
                     <ArrowUpRight className="w-4 h-4" />
                   </Link>
 
-                  <button
-                    onClick={handleNext}
-                    className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-900 font-semibold cursor-pointer"
+                  <Link
+                    to="/contact"
+                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 font-semibold text-xs transition-all active:scale-98"
                   >
-                    <span>Next Discipline</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
+                    <span>Talk Directly with a Developer</span>
+                  </Link>
                 </div>
 
               </div>
 
+              {/* Direct Help / Contact Note */}
+              <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex items-start gap-3.5 reveal-init stagger-5">
+                <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0 mt-0.5 border border-sky-100">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-900">Have a custom question?</div>
+                  <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                    We respond to inquiries with practical technical recommendations within 24 hours.
+                  </p>
+                </div>
+              </div>
+
             </div>
 
-          </div>
-        )}
-
-        {/* VIEW MODE 2: Full Grid Matrix (Compact Responsive Grid) */}
-        {viewMode === 'grid' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
-            {filteredServices.map((service) => {
-              const Icon = iconMap[service.number] || Globe;
-              return (
-                <div
-                  key={service.id}
-                  className="studio-card p-6 sm:p-7 rounded-[28px] bg-white border border-slate-200 shadow-2xs hover:shadow-xl hover:border-sky-300 transition-all duration-300 flex flex-col justify-between group"
-                >
+            {/* =================================================== */}
+            {/* RIGHT COLUMN: Deliverables, Stack & Simple Process  */}
+            {/* =================================================== */}
+            <div className="lg:col-span-7 space-y-6">
+              
+              {/* Deliverables Card (All 5 Items) */}
+              <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-5 reveal-init" data-reveal>
+                <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                   <div>
-                    <div className="flex items-center justify-between mb-4 pb-3.5 border-b border-slate-100">
-                      <div className="flex items-center gap-2">
-                        <div className="w-9 h-9 rounded-xl bg-slate-950 text-white flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors shadow-2xs">
-                          <Icon className="w-4 h-4 text-sky-400 group-hover:text-white transition-colors" />
-                        </div>
-                        <span className="font-mono text-xs font-bold text-slate-900">
-                          DISCIPLINE {service.number}
-                        </span>
-                      </div>
-                      <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600">
-                        VERIFIED
-                      </span>
+                    <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">
+                      Everything Included
                     </div>
-
-                    <h3 className="font-display font-bold text-xl text-slate-950 mb-2 group-hover:text-sky-700 transition-colors">
-                      {service.title}
+                    <h3 className="font-display font-bold text-xl sm:text-2xl text-slate-950 mt-0.5 text-fade-in">
+                      What You Get
                     </h3>
-                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-5">
-                      {service.shortDescription}
-                    </p>
-
-                    <div className="mb-4">
-                      <ServiceCardVisual serviceNumber={service.number} />
-                    </div>
-
-                    <div className="flex flex-wrap gap-1.5 mb-6">
-                      {service.technologies.slice(0, 4).map((tech, idx) => (
-                        <span key={idx} className="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-600">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
                   </div>
+                  <span className="text-xs font-mono font-semibold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/70">
+                    5 Key Deliverables
+                  </span>
+                </div>
 
-                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <Link
-                      to={`/contact?service=${encodeURIComponent(service.title)}`}
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-sky-700 hover:text-sky-900"
+                <div className="space-y-3">
+                  {selectedService.deliverables.map((del, idx) => (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-xl bg-slate-50/80 border border-slate-200/70 hover:border-slate-300 hover:bg-slate-50 transition-all flex items-start gap-3.5 reveal-init"
+                      style={{ transitionDelay: `${idx * 75}ms` }}
+                      data-reveal
                     >
-                      <span>Scope Project</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </Link>
-                    <button
-                      onClick={() => {
-                        setSelectedServiceId(service.id);
-                        setViewMode('console');
-                      }}
-                      className="text-xs font-mono text-slate-500 hover:text-slate-900 cursor-pointer"
+                      <div className="w-5 h-5 rounded-md bg-emerald-100 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">
+                          Deliverable 0{idx + 1}
+                        </div>
+                        <div className="text-sm font-semibold text-slate-900 mt-0.5">
+                          {del}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Technologies We Use Card */}
+              <div className="p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4 reveal-init" data-reveal>
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <div>
+                    <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">
+                      Technologies
+                    </div>
+                    <h3 className="font-display font-bold text-lg text-slate-950 mt-0.5 text-fade-in">
+                      Tools & Frameworks We Use
+                    </h3>
+                  </div>
+                  <span className="text-xs font-mono text-slate-500">
+                    Modern Stack
+                  </span>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {selectedService.technologies.map((tech, i) => (
+                    <span
+                      key={i}
+                      className="px-3.5 py-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-800 font-mono text-xs font-semibold hover:border-sky-300 hover:bg-sky-50/50 hover:text-sky-800 transition-colors"
                     >
-                      Open Full Stage ➔
-                    </button>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Simple 3-Step Process Card */}
+              <div className="p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4 reveal-init" data-reveal>
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <div>
+                    <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">
+                      Simple 3-Step Process
+                    </div>
+                    <h3 className="font-display font-bold text-lg text-slate-950 mt-0.5 text-fade-in">
+                      How We Work With You
+                    </h3>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        )}
 
-        {/* Bottom Consultation Strip */}
-        <div className="p-6 sm:p-10 rounded-[32px] bg-white border border-slate-200 shadow-sm text-center max-w-3xl mx-auto space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-sky-50 border border-sky-200 text-sky-700 flex items-center justify-center mx-auto">
-            <Sparkles className="w-6 h-6" />
-          </div>
-          <h3 className="font-display font-bold text-2xl sm:text-3xl text-slate-950">
-            Have a Specific Architectural Requirement?
-          </h3>
-          <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
-            Every business has distinct workflows. We are happy to review your technical specs, mockups, or existing codebase and provide a realistic, fixed-scope milestone proposal.
-          </p>
-          <div className="pt-2">
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-slate-950 hover:bg-sky-600 text-white font-semibold text-base transition-all shadow-md active:scale-98"
-            >
-              <span>Schedule a Technical Discovery Call</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </Link>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 reveal-init stagger-1">
+                    <div className="text-[10px] font-mono font-bold text-sky-700 uppercase">Step 01</div>
+                    <div className="text-xs font-bold text-slate-900 mt-1">Planning & Requirements</div>
+                    <div className="text-[11px] text-slate-500 mt-1">We discuss what you need and agree on clear milestones.</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 reveal-init stagger-2">
+                    <div className="text-[10px] font-mono font-bold text-sky-700 uppercase">Step 02</div>
+                    <div className="text-xs font-bold text-slate-900 mt-1">Design & Development</div>
+                    <div className="text-[11px] text-slate-500 mt-1">We build your product with regular progress demos.</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 reveal-init stagger-3">
+                    <div className="text-[10px] font-mono font-bold text-emerald-700 uppercase">Step 03</div>
+                    <div className="text-xs font-bold text-slate-900 mt-1">Testing & Final Launch</div>
+                    <div className="text-[11px] text-slate-500 mt-1">We test thoroughly and hand over complete code ownership.</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Fast & Free Quote Card */}
+              <div className="p-6 sm:p-8 rounded-2xl bg-slate-950 text-white border border-slate-800 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 reveal-init" data-reveal>
+                <div>
+                  <div className="text-xs font-mono text-sky-400 font-semibold uppercase tracking-wider">
+                    Fast & Free Quote
+                  </div>
+                  <h4 className="font-display font-bold text-xl text-white mt-1 text-fade-in">
+                    Ready to discuss your project?
+                  </h4>
+                  <p className="text-slate-400 text-xs sm:text-sm mt-1 max-w-md text-fade-in stagger-1">
+                    Get a clear estimate and timeline from a developer within 24 hours.
+                  </p>
+                </div>
+                <Link
+                  to={`/contact?service=${encodeURIComponent(selectedService.title)}`}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs transition-all shrink-0 active:scale-98"
+                >
+                  <span>Request a Quote</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+
+            </div>
+
           </div>
         </div>
 
       </div>
+    );
+  }
+
+  // =========================================================================
+  // VIEW B: FULL SERVICES DIRECTORY (When viewing /services with no serviceId)
+  // =========================================================================
+  return (
+    <div className="min-h-screen bg-slate-50/50">
+      
+      {/* 1. HERO SECTION */}
+      <section className="relative pt-12 pb-16 sm:pt-16 sm:pb-20 md:pt-20 md:pb-24 overflow-hidden bg-blueprint border-b border-slate-200">
+        <div className="studio-container relative z-10 text-center max-w-3xl mx-auto reveal-init" data-reveal>
+          
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-xs text-xs font-mono text-sky-700 font-semibold mb-4 reveal-init">
+            <Sparkles className="w-3.5 h-3.5 text-sky-600" />
+            <span>PROFESSIONAL WEB & SOFTWARE SERVICES</span>
+          </div>
+
+          {/* Main Title with text fade */}
+          <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] text-slate-950 tracking-tight leading-[1.12] mb-4 text-fade-in">
+            Clear, Reliable Software Services for Your Business
+          </h1>
+
+          {/* Subtitle with text fade */}
+          <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto text-fade-in stagger-1">
+            Whether you need a new website, a mobile app, an online store, or custom software, we build it cleanly and handle all the technical details so you can focus on running your business.
+          </p>
+
+          {/* Value Highlights */}
+          <div className="mt-8 pt-6 border-t border-slate-200/80 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-xs font-mono text-slate-600 reveal-init stagger-2">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-sky-600" />
+              <span>11 Core Capabilities</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <span>Production-Grade Architecture</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+              <span>Direct Senior Engineer Access</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. FILTER & SEARCH CONTROLS */}
+      <section className="sticky top-16 z-20 bg-white/95 backdrop-blur-md border-b border-slate-200 py-4 shadow-xs">
+        <div className="studio-container">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            {/* Category Pills */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar w-full md:w-auto pb-1 md:pb-0">
+              {categories.map((cat) => {
+                const isActive = activeCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                      isActive
+                        ? 'bg-slate-950 text-white shadow-sm'
+                        : 'bg-slate-100 hover:bg-slate-200/80 text-slate-600 hover:text-slate-950'
+                    }`}
+                  >
+                    <span>{cat.label}</span>
+                    <span className={`text-[11px] px-2 py-0.5 rounded-md font-mono ${
+                      isActive ? 'bg-slate-800 text-sky-300' : 'bg-white text-slate-500'
+                    }`}>
+                      {cat.count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Search Input */}
+            <div className="relative w-full md:w-80 lg:w-96 group">
+              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none transition-colors">
+                <Search className={`w-4 h-4 transition-colors duration-200 ${searchQuery ? 'text-sky-600' : 'text-slate-400 group-focus-within:text-sky-600'}`} />
+              </div>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search services or tech..."
+                className="w-full pl-10 pr-9 py-2.5 bg-white hover:bg-slate-50/80 focus:bg-white border border-slate-200 hover:border-slate-300 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 rounded-xl text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 transition-all outline-none shadow-2xs font-medium"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors cursor-pointer"
+                  title="Clear search"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 3. SERVICES GRID */}
+      <section className="py-12 sm:py-16">
+        <div className="studio-container">
+          
+          {filteredServices.length === 0 ? (
+            <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 p-8 max-w-lg mx-auto">
+              <Search className="w-8 h-8 text-slate-400 mx-auto mb-3" />
+              <h3 className="font-display font-bold text-lg text-slate-900">No matching services found</h3>
+              <p className="text-slate-500 text-xs sm:text-sm mt-1">Try adjusting your search terms or select "All Services".</p>
+              <button
+                onClick={() => { setActiveCategory('All'); setSearchQuery(''); }}
+                className="mt-4 px-4 py-2 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-sky-600 transition-colors"
+              >
+                Reset Filters
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+              {filteredServices.map((service, index) => {
+                const Icon = iconMap[service.number] || Globe;
+                const categoryName = categoryMap[service.number];
+
+                return (
+                  <Link
+                    key={service.id}
+                    to={`/services/${service.id}`}
+                    className="block h-full cursor-pointer no-underline text-inherit group reveal-init"
+                    style={{ transitionDelay: `${(index % 6) * 75}ms` }}
+                    data-reveal
+                  >
+                    <div className="studio-card h-full flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-xs group-hover:shadow-xl group-hover:border-sky-300 transition-all duration-300">
+                      <div>
+                        {/* Card Top: Number + Category Tag + Animated Icon */}
+                        <div className="flex items-center justify-between gap-3 mb-5">
+                          <div className="flex items-center gap-2.5">
+                            <span className="font-mono text-xs font-bold text-slate-700 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-md">
+                              {service.number}
+                            </span>
+                            <span className="text-[11px] font-mono font-medium text-sky-700 bg-sky-50 border border-sky-200/70 px-2.5 py-1 rounded-md">
+                              {categoryName}
+                            </span>
+                          </div>
+
+                          <div className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200/90 text-slate-700 flex items-center justify-center transition-all duration-300 shadow-2xs group-hover:bg-slate-950 group-hover:border-slate-950 group-hover:text-sky-400 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-[0_8px_20px_rgba(2,132,199,0.22)] active:scale-90 active:rotate-0">
+                            <Icon className="w-5 h-5 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-3 group-active:scale-95" />
+                          </div>
+                        </div>
+
+                        {/* Title with text fade */}
+                        <h3 className="font-display font-bold text-xl text-slate-950 mb-2.5 leading-snug group-hover:text-sky-700 transition-colors text-fade-in">
+                          {service.title}
+                        </h3>
+
+                        {/* Short Description with text fade */}
+                        <p className="text-slate-600 text-sm leading-relaxed mb-5 text-fade-in stagger-1">
+                          {service.shortDescription}
+                        </p>
+
+                        {/* Who This Is Best For Box */}
+                        <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 mb-5">
+                          <div className="flex items-center gap-1.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 mb-1">
+                            <Zap className="w-3.5 h-3.5 text-sky-600" />
+                            <span>Who This Is Best For</span>
+                          </div>
+                          <p className="text-xs text-slate-700 leading-normal font-medium">
+                            {service.idealFor}
+                          </p>
+                        </div>
+
+                        {/* Key Deliverables (Clean 3 bullets) */}
+                        <div className="space-y-2 mb-5">
+                          <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">
+                            Included Deliverables:
+                          </div>
+                          <ul className="space-y-1.5">
+                            {service.deliverables.slice(0, 3).map((del, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-xs text-slate-700">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                                <span className="leading-snug">{del}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Tech Stack Tags */}
+                        <div className="flex flex-wrap gap-1.5 mb-6">
+                          {service.technologies.map((tech, idx) => (
+                            <span
+                              key={idx}
+                              className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200/60"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Card Actions Footer */}
+                      <div className="pt-4 border-t border-slate-100">
+                        <div className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-950 group-hover:bg-sky-600 text-white text-xs font-semibold transition-all shadow-xs">
+                          <span>View Full Service & Deliverables</span>
+                          <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </div>
+                      </div>
+
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+
+        </div>
+      </section>
+
+      {/* 4. HOW WE PARTNER / ENGAGEMENT MODELS */}
+      <section className="py-14 sm:py-18 bg-white border-y border-slate-200">
+        <div className="studio-container">
+          
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-xs font-mono text-slate-700 font-semibold mb-3">
+              <span>FLEXIBLE ENGAGEMENT</span>
+            </div>
+            <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-slate-950">
+              How We Partner With You
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base mt-2">
+              Every project is different. Choose the engagement framework that matches your development cycle and business goals.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Model 1 */}
+            <div className="p-6 sm:p-7 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-sky-100 border border-sky-200 text-sky-700 flex items-center justify-center mb-4">
+                  <Clock className="w-5 h-5" />
+                </div>
+                <div className="text-xs font-mono uppercase tracking-wider text-sky-700 font-bold">Model 01</div>
+                <h3 className="font-display font-bold text-lg text-slate-950 mt-1 mb-2">
+                  Milestone Sprints
+                </h3>
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+                  Fixed-scope 2–4 week engineering sprints with defined milestone deliverables. Perfect for MVPs, feature rollouts, and focused product modules.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-slate-200/80 text-xs font-mono text-slate-500">
+                Transparent milestones • Predictable delivery
+              </div>
+            </div>
+
+            {/* Model 2 */}
+            <div className="p-6 sm:p-7 rounded-2xl bg-slate-900 text-white shadow-lg border border-slate-800 flex flex-col justify-between relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl pointer-events-none" />
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 text-sky-300 flex items-center justify-center mb-4">
+                  <Layers className="w-5 h-5" />
+                </div>
+                <div className="text-xs font-mono uppercase tracking-wider text-sky-400 font-bold">Model 02 • Most Popular</div>
+                <h3 className="font-display font-bold text-lg text-white mt-1 mb-2">
+                  Full-Cycle Product Build
+                </h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+                  End-to-end technical architecture, system design, frontend & backend implementation, and production cloud launch with direct engineer access.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-slate-800 text-xs font-mono text-sky-300">
+                Turnkey product release • Zero tech debt
+              </div>
+            </div>
+
+            {/* Model 3 */}
+            <div className="p-6 sm:p-7 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 border border-emerald-200 text-emerald-700 flex items-center justify-center mb-4">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                <div className="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Model 03</div>
+                <h3 className="font-display font-bold text-lg text-slate-950 mt-1 mb-2">
+                  Dedicated Retainer & Maintenance
+                </h3>
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+                  Continuous development, security patching, database optimization, and priority feature iterations for launched web applications and SaaS platforms.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-slate-200/80 text-xs font-mono text-slate-500">
+                Priority SLA support • Ongoing evolution
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* 5. BOTTOM CTA BANNER */}
+      <section className="py-14 sm:py-20">
+        <div className="studio-container">
+          <div className="rounded-3xl bg-slate-950 text-white p-8 sm:p-12 text-center max-w-4xl mx-auto shadow-2xl border border-slate-800 relative overflow-hidden">
+            <div className="absolute -top-24 -right-24 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative z-10 space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 text-sky-400 flex items-center justify-center mx-auto mb-2">
+                <Sparkles className="w-6 h-6" />
+              </div>
+              <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl">
+                Ready to Build Your Next Digital Product?
+              </h2>
+              <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+                Tell us about your project requirements, timeline, and goals. We'll analyze your specifications and provide a realistic milestone breakdown.
+              </p>
+              <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <Link
+                  to="/contact"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-sm transition-all shadow-lg active:scale-98"
+                >
+                  <span>Start a Technical Conversation</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  to="/case-studies"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-sm transition-all active:scale-98"
+                >
+                  <span>Explore Case Studies</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

@@ -4,6 +4,7 @@ export const projects = [
     title: "MultiTranslate AI",
     category: "AI / Web Application",
     filterCategory: "AI",
+    filterCategories: ["AI", "Web Apps"],
     shortDescription: "An AI-powered translation experience designed to make multilingual communication faster and easier.",
     liveUrl: "https://multi-language-translator-lime.vercel.app/",
     hasLiveUrl: true,
@@ -35,6 +36,7 @@ export const projects = [
     title: "AgenStory",
     category: "AI / Creative Web Application",
     filterCategory: "AI",
+    filterCategories: ["AI", "Web Apps"],
     shortDescription: "An AI-powered creative storytelling experience designed to help users turn ideas into generated stories.",
     liveUrl: "https://gen-story-gamma.vercel.app/",
     hasLiveUrl: true,
@@ -62,42 +64,11 @@ export const projects = [
     outcome: "Live production web application allowing users to generate and explore custom creative narratives on demand."
   },
   {
-    id: "imposter",
-    title: "PulseSync Engine",
-    category: "Real-Time Systems & WebSocket Architecture",
-    filterCategory: "Full Stack",
-    shortDescription: "A high-performance real-time WebSocket communication and state synchronization engine for distributed applications.",
-    liveUrl: null,
-    hasLiveUrl: false,
-    hasCaseStudy: true,
-    isFeaturedHero: false,
-    accentColor: "#0284c7",
-    tagline: "Low-latency WebSocket infrastructure and synchronized event streaming architecture.",
-    overview: "PulseSync was engineered to solve high-concurrency real-time event broadcasting and synchronized state management across distributed web clients. It handles multi-channel presence, rapid message fanout, automated reconnection fallback, and sub-20ms latency.",
-    challenge: "Traditional polling architectures overload server resources and introduce unbearable latency in collaborative environments. The challenge was building an ultra-reliable bi-directional communication mesh with automatic failover and zero message loss.",
-    approach: "We architected an event-driven WebSocket pipeline on Node.js, combined with heartbeat ping/pong monitoring, JWT-authenticated socket handshakes, and resilient client-side state reconcilers.",
-    solution: "A robust real-time streaming engine with live connection health monitors, presence tracking, role-based event dispatching, and a developer-friendly administration dashboard.",
-    keyFeatures: [
-      "Low-latency bi-directional WebSocket event broadcast",
-      "JWT token handshake and role-based socket security",
-      "Client heartbeat monitoring with automatic reconnection",
-      "Multi-tenant room and channel state isolation",
-      "Live latency telemetry and cluster health diagnostics"
-    ],
-    techStack: ["WebSockets", "Node.js", "React.js", "Tailwind CSS", "Redis Pub/Sub"],
-    deliverables: [
-      "Real-time WebSocket server cluster architecture",
-      "Client SDK with automatic reconnection & retry logic",
-      "Live system health telemetry dashboard"
-    ],
-    outcome: "Successfully engineered a sub-20ms real-time event infrastructure capable of supporting high-frequency bi-directional state synchronization with zero packet drop."
-  },
-
-  {
     id: "medexplain-ai",
     title: "MedExplain AI",
     category: "AI / Full-Stack Application",
     filterCategory: "Full Stack",
+    filterCategories: ["Full Stack", "AI"],
     shortDescription: "An AI-powered application designed to analyze user-provided health-related information and present the output through a structured digital experience.",
     liveUrl: null,
     hasLiveUrl: false,
@@ -129,6 +100,7 @@ export const projects = [
     title: "OfficialCoders",
     category: "E-Learning / Full-Stack Platform",
     filterCategory: "Full Stack",
+    filterCategories: ["Full Stack"],
     shortDescription: "A full-stack learning platform featuring courses, topics, quizzes, progress tracking and certificates.",
     liveUrl: null,
     hasLiveUrl: false,
@@ -160,6 +132,7 @@ export const projects = [
     title: "Lumora Cafe",
     category: "Business Website",
     filterCategory: "Business Websites",
+    filterCategories: ["Business Websites"],
     shortDescription: "A modern visual website concept designed for a cafe brand, combining responsive layouts with an engaging browsing experience.",
     liveUrl: null,
     hasLiveUrl: false,
@@ -189,3 +162,10 @@ export const projects = [
 ];
 
 export const filterCategories = ["All", "AI", "Web Apps", "Business Websites", "Full Stack"];
+
+export const matchesProjectCategory = (project, filterId) => {
+  if (!filterId || filterId === 'All') return true;
+  if (project.filterCategory === filterId) return true;
+  if (Array.isArray(project.filterCategories) && project.filterCategories.includes(filterId)) return true;
+  return false;
+};

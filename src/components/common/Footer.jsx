@@ -54,13 +54,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/work" className="text-slate-400 hover:text-white transition-colors">
-                  Selected Work
+                <Link to="/case-studies" className="text-slate-400 hover:text-white transition-colors">
+                  Case Studies
                 </Link>
               </li>
               <li>
-                <Link to="/case-studies" className="text-slate-400 hover:text-white transition-colors">
-                  Case Studies
+                <Link to="/technology" className="text-slate-400 hover:text-white transition-colors">
+                  Technology
                 </Link>
               </li>
               <li>

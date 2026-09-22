@@ -69,29 +69,46 @@ export default function TechnologyPage() {
 
       {/* Architectural Tier Cards Section */}
       <TechStackSection 
-        title="Production Architectural Matrix"
-        subtitle="Engineered tier-by-tier with strict type contracts, verified benchmarks, and zero vendor lock-in."
+        title="The Technologies We Build With"
+        subtitle="Every tool we use is chosen for stability, speed, and long-term reliability — so your application runs smoothly, scales easily, and remains 100% yours."
       />
 
-      {/* Bottom CTA Consultation Card */}
+      {/* Bottom CTA Consultation Card - Sleek Dark Floating Card Matching Reference */}
       <div className="studio-container mt-14 sm:mt-20 text-center">
-        <div className="p-8 sm:p-12 rounded-[32px] bg-white border border-slate-200/90 shadow-2xs max-w-3xl mx-auto space-y-5">
-          <div className="w-12 h-12 rounded-2xl bg-sky-50 border border-sky-200 text-sky-700 flex items-center justify-center mx-auto">
-            <Sparkles className="w-6 h-6" />
+        <div className="relative overflow-hidden p-10 sm:p-14 md:p-16 rounded-[32px] bg-[#070b14] border border-slate-800/90 shadow-2xl max-w-4xl mx-auto space-y-6">
+          {/* Subtle Ambient Radial Glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-64 bg-sky-500/10 blur-[100px] rounded-full pointer-events-none" />
+
+          {/* Glowing Center Icon Badge */}
+          <div className="relative z-10 w-12 h-12 rounded-2xl bg-slate-900/90 border border-slate-700/80 text-sky-400 flex items-center justify-center mx-auto shadow-inner">
+            <Sparkles className="w-5 h-5" />
           </div>
-          <h3 className="font-display font-bold text-2xl sm:text-3xl text-slate-950">
+
+          {/* Heading */}
+          <h3 className="relative z-10 font-display font-extrabold text-2xl sm:text-3xl md:text-4xl text-white tracking-tight">
             Have a Specific Tech Stack Requirement?
           </h3>
-          <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
+
+          {/* Subtitle */}
+          <p className="relative z-10 text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mx-auto font-normal">
             Whether your project requires Next.js, Node/Express, PostgreSQL, Python LLM pipelines, or Shopify integrations, we adapt to your existing infrastructure.
           </p>
-          <div className="pt-2">
+
+          {/* Dual Action Buttons */}
+          <div className="relative z-10 pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-slate-950 hover:bg-sky-600 text-white font-semibold text-base transition-all shadow-md active:scale-98"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-semibold text-sm transition-all shadow-md active:scale-98"
             >
-              <span>Discuss Your Tech Stack</span>
-              <ArrowUpRight className="w-4 h-4" />
+              <span>Start a Technical Conversation</span>
+              <ArrowUpRight className="w-4 h-4 text-slate-950" />
+            </Link>
+
+            <Link
+              to="/case-studies"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 text-sm font-semibold transition-all active:scale-98"
+            >
+              <span>Explore Case Studies</span>
             </Link>
           </div>
         </div>

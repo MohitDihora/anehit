@@ -24,87 +24,87 @@ export default function WhyUsSection() {
   const pillars = [
     {
       id: '01',
-      title: 'Direct Senior Engineer Access',
-      subtitle: 'Zero middle managers. Zero lost-in-translation handoffs.',
-      description: 'When you work with AneHit IT Tech, you talk directly with the senior engineers designing, architecting, and writing your code. No account executives, no junior subcontractors, and no communication lag.',
-      highlight: 'Direct Founder & Engineer Communication',
+      title: 'You Talk Directly to the Developers',
+      subtitle: 'No middlemen, no sales reps, and no confusing telephone games.',
+      description: 'When you share an idea, request a change, or ask a question, you talk directly with the developers actually writing your code. We listen carefully, answer in plain English, and keep you in the loop every single week.',
+      highlight: 'Real People, Direct Communication',
       icon: MessageSquareCode,
       tagColor: 'text-sky-700 bg-sky-50 border-sky-200',
       iconBg: 'bg-sky-500/10 text-sky-600 border-sky-200',
       activeBorder: 'border-sky-300 ring-2 ring-sky-100',
       glow: 'rgba(14, 165, 233, 0.12)',
       deliverables: [
-        'Direct Slack, WhatsApp, or Upwork communication with founders',
-        'Weekly async video walkthroughs after every milestone deploy',
-        'Transparent architectural decisions with zero tech jargon'
+        'Quick replies on WhatsApp, Slack, or email whenever you need us',
+        'Regular demos and walkthroughs so you see your product come to life',
+        'Honest advice on what will work best for your project and budget'
       ]
     },
     {
       id: '02',
-      title: 'Modern Architecture & Clean Code',
-      subtitle: 'Built for 5+ years of longevity, not an annual rebuild.',
-      description: 'We engineer using modern React 19, TypeScript, Tailwind CSS, scalable Node/Python backends, and strict relational schemas. Modular, well-documented code ensures any engineer can maintain or extend it.',
-      highlight: 'Modern Stacks. Strict Type Safety.',
+      title: 'Websites & Apps That Just Work',
+      subtitle: 'Fast loading, easy to use, and built to last.',
+      description: 'We build clean, reliable websites and software that your customers will love using. Everything we create is fast, looks great on both phones and computers, and is built properly so you never have to worry about sudden crashes.',
+      highlight: 'Reliable & Easy to Use',
       icon: Code2,
       tagColor: 'text-emerald-700 bg-emerald-50 border-emerald-200',
       iconBg: 'bg-emerald-500/10 text-emerald-600 border-emerald-200',
       activeBorder: 'border-emerald-300 ring-2 ring-emerald-100',
       glow: 'rgba(16, 185, 129, 0.12)',
       deliverables: [
-        'Component-driven architecture with zero spaghetti dependencies',
-        'Lighthouse 95+ performance scores and sub-1s load times',
-        'Comprehensive inline documentation and deployment READMEs'
+        'Pages that open instantly on mobile and desktop without delays',
+        'Clean, organized code that is easy to update whenever you grow',
+        'Carefully tested on real screens and devices before we launch'
       ]
     },
     {
       id: '03',
-      title: 'Business-Driven Engineering',
-      subtitle: 'Code that directly serves metrics, conversion, and retention.',
-      description: 'We don’t just write code to check off feature tickets. We analyze your business model, customer workflows, and monetization channels so every technical decision drives real commercial growth.',
-      highlight: 'Outcome-Oriented Technical Direction',
+      title: 'Focused on What Actually Helps Your Business',
+      subtitle: 'We build features that bring you real visitors, leads, and sales.',
+      description: 'We don’t overcomplicate things with unnecessary tech buzzwords or features you won’t use. Instead, we look at your goals and create clean user journeys that make it effortless for your visitors to become paying customers.',
+      highlight: 'Practical & Goal-Driven',
       icon: Target,
       tagColor: 'text-amber-800 bg-amber-50 border-amber-200',
       iconBg: 'bg-amber-500/10 text-amber-600 border-amber-200',
       activeBorder: 'border-amber-300 ring-2 ring-amber-100',
       glow: 'rgba(245, 158, 11, 0.12)',
       deliverables: [
-        'Conversion-optimized user flows and tactile micro-interactions',
-        'Pragmatic MVP scoping to launch in weeks, not months',
-        'Built-in analytics and custom event tracking hooks'
+        'Simple, welcoming design that guides visitors to take action',
+        'A practical plan to get your project launched without delays',
+        'Built-in analytics so you can easily see how your site is performing'
       ]
     },
     {
       id: '04',
-      title: 'End-to-End Delivery & Ownership',
-      subtitle: 'From initial concept to verified production deploy.',
-      description: 'We take complete responsibility for the full development lifecycle—from wireframing and frontend engineering to database models, security auditing, payment gateway setup, and cloud deployment.',
-      highlight: '100% Full Lifecycle Coverage',
+      title: 'We Handle Everything From Start to Finish',
+      subtitle: 'Design, development, testing, and full launch support.',
+      description: 'You won’t have to worry about confusing technical setups, domain pointing, or server settings. We take care of the entire process from the first sketch to the live website, and we stay available to help even after launch.',
+      highlight: 'Complete Hands-on Care',
       icon: ShieldCheck,
       tagColor: 'text-purple-700 bg-purple-50 border-purple-200',
       iconBg: 'bg-purple-500/10 text-purple-600 border-purple-200',
       activeBorder: 'border-purple-300 ring-2 ring-purple-100',
       glow: 'rgba(168, 85, 247, 0.12)',
       deliverables: [
-        'Live staging preview environment before every final release',
-        'Automated CI/CD build tests with zero-downtime deployment',
-        'Post-launch 30-day warranty and retainer maintenance support'
+        'Full setup including domain, hosting, email, and security certificates',
+        'A private preview link where you can test everything before launch',
+        'Ongoing support so you always have someone to call if you need help'
       ]
     },
     {
       id: '05',
-      title: '100% IP Ownership & Transparent Pricing',
-      subtitle: 'You own every line of code, asset, and repository.',
-      description: 'No vendor lock-in, no hidden hourly markups, and no proprietary licensing fees. You receive complete intellectual property ownership, full GitHub repository rights, and fixed milestone agreements.',
-      highlight: 'Zero Lock-in. Complete Freedom.',
+      title: 'Honest Pricing & You Own 100% of the Work',
+      subtitle: 'Fixed rates, no hidden fees, and everything belongs to you.',
+      description: 'We believe in fairness and trust. You get clear, upfront pricing with zero surprise charges. Once a milestone is completed, all code, designs, and credentials belong entirely to you—with no lock-in and no strings attached.',
+      highlight: '100% Yours. No Hidden Fees.',
       icon: Award,
       tagColor: 'text-rose-700 bg-rose-50 border-rose-200',
       iconBg: 'bg-rose-500/10 text-rose-600 border-rose-200',
       activeBorder: 'border-rose-300 ring-2 ring-rose-100',
       glow: 'rgba(244, 63, 94, 0.12)',
       deliverables: [
-        'Fixed milestone pricing with zero budget surprises',
-        'Immediate Git repo ownership transfer on milestone signoff',
-        'Full Upwork Escrow or direct contract protection'
+        'Clear, fixed project quotes agreed upon before any work begins',
+        'Full ownership of all files, code repositories, and accounts',
+        'Milestone-based progress so you only pay as work is approved'
       ]
     }
   ];
@@ -196,10 +196,9 @@ export default function WhyUsSection() {
         {/* Section Header with Navigation Controls */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-6">
           <SectionHeader
-            figNumber="FIG. 04"
-            label="The Studio Advantage"
-            title="Why Work With Us"
-            subtitle="We are an engineering studio built around craft, clarity, and accountability—not an agency that hands your project off to junior subcontractors."
+            label="Why Work With Us"
+            title="A Better, Simpler Way to Build Software"
+            subtitle="We are a friendly, experienced development team that cares about your product as much as you do. Clear communication, honest pricing, and reliable results."
             className="mb-0"
           />
 
@@ -229,7 +228,7 @@ export default function WhyUsSection() {
           </div>
         </div>
 
-        {/* Swipe Card Stage with Overflow Hidden */}
+        {/* Swipe Card Stage with Overflow Hidden - with vertical padding to prevent border/shadow clipping */}
         <div 
           ref={trackRef}
           onTouchStart={handleTouchStart}
@@ -238,7 +237,7 @@ export default function WhyUsSection() {
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
-          className="relative w-full overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y rounded-[28px] sm:rounded-[36px]"
+          className="relative w-full overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y py-4 px-1.5 -my-4 -mx-1.5"
         >
           {/* Multi-Card Sliding Track */}
           <div 
@@ -255,14 +254,14 @@ export default function WhyUsSection() {
               return (
                 <div 
                   key={pillar.id}
-                  className="w-full shrink-0 flex-none px-0.5 sm:px-1 box-border transition-all duration-300"
+                  className="w-full shrink-0 flex-none px-1.5 sm:px-2 box-border transition-all duration-300"
                   style={{
                     opacity: isActive ? 1 : 0.4,
                     transform: isActive ? 'scale(1)' : 'scale(0.985)',
                     transition: 'opacity 0.4s ease, transform 0.4s ease'
                   }}
                 >
-                  <div className="studio-card p-6 sm:p-10 md:p-12 bg-gradient-to-b from-white via-slate-50/40 to-white border border-slate-200/90 shadow-[0_16px_50px_rgba(0,0,0,0.06)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.09)] rounded-[28px] sm:rounded-[36px] relative overflow-hidden h-full flex flex-col justify-between">
+                  <div className="p-6 sm:p-10 md:p-12 bg-white border border-slate-200 hover:border-slate-300 rounded-2xl sm:rounded-3xl relative overflow-hidden h-full flex flex-col justify-between">
                     
                     {/* Subtle Ambient Background Radial Tint */}
                     <div 
@@ -276,7 +275,7 @@ export default function WhyUsSection() {
                       <div className="lg:col-span-7 space-y-5">
                         <div className="flex flex-wrap items-center gap-3">
                           <span className="font-mono text-xs sm:text-sm font-bold px-3 py-1 rounded-lg border bg-slate-900 text-white shadow-xs">
-                            PILLAR {pillar.id}
+                            BENEFIT {pillar.id}
                           </span>
                           <span className={`text-xs sm:text-sm font-bold px-3 py-1 rounded-lg border ${pillar.tagColor}`}>
                             {pillar.highlight}
@@ -297,22 +296,22 @@ export default function WhyUsSection() {
 
                         <div className="pt-2 flex items-center gap-2 text-xs sm:text-sm font-mono text-slate-500">
                           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                          <span>Swipe or click arrows to explore all 5 studio advantages</span>
+                          <span>Swipe or click arrows to explore all 5 benefits</span>
                         </div>
                       </div>
 
                       {/* Right Concrete Deliverables Card */}
-                      <div className="lg:col-span-5 bg-white/90 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
+                      <div className="lg:col-span-5 bg-white backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
                         <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
                           <div className={`w-12 h-12 rounded-xl flex items-center justify-center border shrink-0 ${pillar.iconBg}`}>
                             <IconComponent className="w-6 h-6" />
                           </div>
                           <div>
                             <div className="font-display font-bold text-base text-slate-950">
-                              Studio Guarantee
+                              What You Get
                             </div>
                             <div className="text-xs text-slate-500 font-mono">
-                              STANDARDS // VERIFIED
+                              OUR PROMISE
                             </div>
                           </div>
                         </div>
@@ -329,8 +328,8 @@ export default function WhyUsSection() {
                         </div>
 
                         <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-400">
-                          <span>ACCOUNTABILITY</span>
-                          <span className="text-sky-700 font-bold">100% DIRECT SENIOR DUO</span>
+                          <span>PARTNERSHIP</span>
+                          <span className="text-sky-700 font-bold">DIRECT DEVELOPER ACCESS</span>
                         </div>
                       </div>
 

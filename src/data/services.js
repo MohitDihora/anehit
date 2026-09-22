@@ -3,176 +3,176 @@ export const services = [
     id: "custom-software-development",
     number: "01",
     title: "Custom Software Development",
-    shortDescription: "Tailored software engineered around your unique business logic, workflows, and operational architecture.",
-    fullDescription: "Off-the-shelf software often forces businesses into rigid constraints. We architect and develop custom software solutions tailored to your operational workflows, eliminating bottlenecks, automating repetitive processes, and scaling effortlessly with your growth.",
+    shortDescription: "We build custom software made specifically for how your business works, replacing messy spreadsheets and manual tasks.",
+    fullDescription: "Ready-made software doesn't always fit your exact business needs. We build custom web applications and internal tools designed around your daily workflow. You get clean, easy-to-use software that saves you time, cuts down on manual work, and belongs 100% to you.",
     deliverables: [
-      "Custom business workflow architecture",
-      "Scalable modular code structure",
-      "Database schema & data pipelines",
-      "Automated testing & quality assurance",
-      "Comprehensive developer documentation"
+      "Clean, easy-to-use web application tailored to your team",
+      "Secure database to store your business records safely",
+      "User accounts with custom permissions for staff and admins",
+      "Thorough testing on mobile, tablet, and desktop before launch",
+      "Full source code ownership with zero monthly licensing fees"
     ],
     technologies: ["React.js", "Node.js", "Express.js", "PostgreSQL", "MongoDB", "TypeScript"],
-    idealFor: "Businesses requiring tailored software that integrates with existing workflows."
+    idealFor: "Businesses that have outgrown Excel sheets or need a dedicated tool built just for them."
   },
   {
     id: "web-mobile-app-development",
     number: "02",
     title: "Web & Mobile App Development",
-    shortDescription: "Modern, high-performance web applications and responsive cross-platform mobile experiences.",
-    fullDescription: "From progressive web applications (PWAs) to responsive mobile-first digital products, we craft fast, intuitive applications built to handle real traffic, complex user journeys, and seamless cross-device state synchronization.",
+    shortDescription: "Fast, modern websites and mobile apps that work smoothly on phones, tablets, and computers.",
+    fullDescription: "We design and code responsive websites and mobile-friendly web apps that your customers will love using. Everything loads fast, looks great on screens of any size, and is easy to navigate from day one.",
     deliverables: [
-      "Mobile-first responsive web apps",
-      "Cross-platform mobile optimization",
-      "Offline caching & PWA support",
-      "State management & live sync",
-      "App store & web deployment setup"
+      "Mobile-friendly design that looks great on any screen",
+      "Fast page loading speeds for a better customer experience",
+      "Simple, intuitive navigation your users understand immediately",
+      "Contact forms and lead capture sent directly to your email",
+      "Live setup and launch on your domain name"
     ],
     technologies: ["React.js", "Tailwind CSS", "Vite", "PWA", "REST APIs"],
-    idealFor: "Startups and companies launching customer-facing digital products."
+    idealFor: "Startups, local businesses, and founders launching a new app or modern website."
   },
   {
     id: "ecommerce-website",
     number: "03",
     title: "E-commerce Website",
-    shortDescription: "High-conversion online storefronts with fast loading speeds, product catalogs, and cart workflows.",
-    fullDescription: "Every millisecond counts in e-commerce. We build lightning-fast storefronts with optimized checkout funnels, catalog filtering, inventory management, dynamic pricing, and mobile-first shopping experiences that maximize conversion.",
+    shortDescription: "Online stores built to showcase your products, accept payments smoothly, and help you sell more.",
+    fullDescription: "Selling online should be straightforward. We create beautiful online stores with easy product browsing, quick shopping carts, and hassle-free checkouts so your customers can buy with confidence on any device.",
     deliverables: [
-      "High-speed product catalog & search",
-      "Seamless shopping cart & checkout flow",
-      "Customer account & order tracking",
-      "Inventory & SKU management hooks",
-      "Core Web Vitals & SEO optimization"
+      "Product catalog with categories, instant search, and filters",
+      "Smooth shopping cart and clean one-page checkout",
+      "Order management and automated customer receipt emails",
+      "Mobile shopping optimization for phone buyers",
+      "Basic SEO setup so your products get discovered on Google"
     ],
     technologies: ["React.js", "Next.js", "Node.js", "Tailwind CSS", "MongoDB"],
-    idealFor: "DTC brands, retailers, and marketplaces seeking high-conversion storefronts."
+    idealFor: "Brands, retail shops, and creators ready to sell products or services online."
   },
   {
     id: "payment-gateway-integration",
     number: "04",
     title: "Payment Gateway Integration",
-    shortDescription: "Secure, compliant payment processing supporting Stripe, PayPal, Razorpay, and global currencies.",
-    fullDescription: "Monetize your product safely. We engineer robust payment integration architectures with webhooks, recurring subscription billing, invoice generation, multi-currency conversion, and PCI-compliant tokenized checkout.",
+    shortDescription: "Safe and simple online payments using Stripe, PayPal, or Razorpay for one-time purchases and subscriptions.",
+    fullDescription: "Get paid directly into your bank account. We integrate trusted payment providers like Stripe, PayPal, and Razorpay so your customers can pay easily by credit card, debit card, or digital wallets with total security.",
     deliverables: [
-      "Stripe, PayPal, Razorpay API integrations",
-      "Recurring subscriptions & webhook handlers",
-      "Multi-currency conversion & tax handling",
-      "Failed payment retry logic & receipts",
-      "PCI-compliant tokenized transactions"
+      "Stripe, PayPal, or Razorpay checkout setup",
+      "Recurring monthly or yearly subscription billing",
+      "Instant payment receipts and invoices sent to customers",
+      "Bank-grade card security and fraud protection",
+      "Automated bank payout connection so money arrives directly to you"
     ],
     technologies: ["Stripe API", "Razorpay", "PayPal SDK", "Node.js", "Webhooks"],
-    idealFor: "SaaS platforms, e-commerce stores, and service businesses taking payments."
+    idealFor: "SaaS products, online stores, and service companies that need to collect payments online."
   },
   {
     id: "portfolio-brand-sites",
     number: "05",
     title: "Portfolio & Brand Sites",
-    shortDescription: "Prestigious digital flagship websites for agencies, executives, studios, and luxury brands.",
-    fullDescription: "Your digital storefront is your primary credibility signal. We craft bespoke brand websites with editorial typography, subtle micro-interactions, responsive storytelling layouts, and high-trust presentations that convert high-value clients.",
+    shortDescription: "High-end showcase websites for agencies, consultants, studios, and professionals wanting to stand out.",
+    fullDescription: "Your website is your first impression. We build clean, modern brand websites that clearly explain what you do, show off your best work, and make it easy for high-paying clients to reach out to you.",
     deliverables: [
-      "Custom visual identity & design system",
-      "Smooth scroll animations & micro-interactions",
-      "Client inquiry & lead capture funnels",
-      "SEO meta & Open Graph optimization",
-      "Global CDN edge hosting setup"
+      "Modern, polished design tailored to your personal or company brand",
+      "Interactive portfolio gallery to showcase past work and case studies",
+      "Direct inquiry contact forms connected to your inbox",
+      "Fast loading speeds and smooth visual animations",
+      "Social media links and Google search preview setup"
     ],
-    technologies: ["React.js", "Tailwind CSS", "Space Grotesk", "Vite", "Vercel"],
-    idealFor: "Founders, boutique studios, consultants, and premium service firms."
+    technologies: ["React.js", "Tailwind CSS", "Outfit Font", "Vite", "Vercel"],
+    idealFor: "Designers, consultants, agencies, lawyers, architects, and business professionals."
   },
   {
     id: "ai-powered-application-development",
     number: "06",
     title: "AI-Powered Application Development",
-    shortDescription: "Generative AI, LLM prompt engineering, streaming UI, and intelligent workflow automation.",
-    fullDescription: "Transform cutting-edge AI into practical business value. We build LLM-powered applications featuring real-time streaming interfaces, document summarization, intelligent classification, contextual retrieval, and natural language interfaces.",
+    shortDescription: "Smart AI tools, chatbots, and automation features built into your website to save you hours of work.",
+    fullDescription: "Want to use AI in your business without the headache? We connect modern AI models (like ChatGPT and Claude) into your website to help answer customer questions 24/7, summarize long documents, or generate content automatically.",
     deliverables: [
-      "OpenAI, Claude, & OpenRouter integrations",
-      "Streaming token UI with markdown parsing",
-      "Prompt engineering & safety guardrails",
-      "Vector search & document ingestion",
-      "AI workflow tools for enterprise tasks"
+      "Custom AI chatbot trained on your company information and FAQs",
+      "Automatic document summary and text extraction tools",
+      "Fast streaming responses with natural human conversation",
+      "Safety controls to keep responses accurate, helpful, and on-brand",
+      "Simple admin screen to monitor and adjust AI responses"
     ],
-    technologies: ["LLM APIs", "OpenRouter", "React.js", "Streaming APIs", "Python"],
-    idealFor: "Founders and businesses embedding AI capabilities into digital products."
+    technologies: ["OpenAI API", "Claude API", "React.js", "Python", "Node.js"],
+    idealFor: "Companies looking to automate customer support, search internal files, or build an AI product."
   },
   {
     id: "authentication-security-systems",
     number: "07",
     title: "Authentication & Security Systems",
-    shortDescription: "Enterprise-grade authentication, role-based access control (RBAC), and data encryption.",
-    fullDescription: "Security is non-negotiable. We implement robust authentication pipelines including JWT token rotation, OAuth (Google/GitHub), multi-factor authentication (MFA), role-based permissions, rate limiting, and encrypted session handling.",
+    shortDescription: "Secure login systems with email passwords, Google sign-in, and protected customer accounts.",
+    fullDescription: "Keep your user data safe and secure. We build reliable login and registration systems with password reset emails, Google one-click login, and private account pages so only the right people can access sensitive information.",
     deliverables: [
-      "JWT auth with refresh token interceptors",
-      "OAuth 2.0 social login integration",
-      "Role-Based Access Control (RBAC)",
-      "Brute-force protection & rate limiting",
-      "Encrypted data storage & CSRF/XSS defense"
+      "Email & password sign-up with secure password hashing",
+      "One-click login with Google or GitHub",
+      "Forgot password and email verification links",
+      "Team roles (e.g. Admin vs Member permissions)",
+      "Protection against spam bots and brute-force logins"
     ],
     technologies: ["JWT", "OAuth 2.0", "bcrypt", "Express.js", "Node.js", "PostgreSQL"],
-    idealFor: "Applications handling sensitive user accounts, customer data, and payments."
+    idealFor: "Any web app, membership site, or client portal that requires user accounts."
   },
   {
     id: "realtime-multilingual-communication",
     number: "08",
     title: "Real-Time & Multilingual Communication Features",
-    shortDescription: "Live WebSockets, instant chat, multilingual localization (i18n), and live sync.",
-    fullDescription: "Connect users in real-time across borders. We engineer low-latency WebSocket communication systems for live notifications, collaborative editing, multi-language localization, and instant text translation workflows.",
+    shortDescription: "Instant messaging, live notifications, and real-time updates without having to refresh the page.",
+    fullDescription: "Keep users engaged with live features. We build real-time chat rooms, direct messaging, live order status updates, and pop-up notifications that update on screen the instant something happens.",
     deliverables: [
-      "WebSocket real-time event broadcasting",
-      "Live chat & room state synchronization",
-      "Multi-language i18n localization engines",
-      "Automated text translation pipelines",
-      "Reconnection handlers & presence status"
+      "Instant one-on-one and group messaging",
+      "Live unread message counters and sound alerts",
+      "Online and offline active user status indicators",
+      "Automatic reconnection if a user temporarily loses internet connection",
+      "Multi-language support for international audiences"
     ],
-    technologies: ["WebSockets", "Socket.io", "React i18n", "LLM APIs", "Node.js"],
-    idealFor: "Collaborative platforms, international marketplaces, and live tools."
+    technologies: ["WebSockets", "Socket.io", "React i18n", "Node.js"],
+    idealFor: "Community platforms, delivery trackers, customer support desks, and collaborative tools."
   },
   {
     id: "lms-certification-platforms",
     number: "09",
     title: "LMS & Certification Platforms",
-    shortDescription: "Educational platforms with hierarchical courses, interactive quizzes, progress tracking, and certificates.",
-    fullDescription: "Deliver structured learning at scale. We build complete LMS platforms with modular course curriculum, interactive video/text lessons, automated quiz evaluation, progress tracking, and verifiable PDF certificate generation.",
+    shortDescription: "Complete learning platforms with video lessons, student quizzes, progress bars, and automatic certificates.",
+    fullDescription: "Share your expertise and sell courses. We create easy-to-use learning platforms where students can enroll, watch lessons step-by-step, take quizzes, track their progress, and automatically receive a completion certificate.",
     deliverables: [
-      "Course, chapter, and topic management",
-      "Interactive quiz evaluation & scoring engine",
-      "Student learning progress dashboard",
-      "Automated verifiable certificate generation",
-      "Instructor & curriculum admin portal"
+      "Organized course curriculum with chapters and lessons",
+      "Interactive quizzes with instant scoring and feedback",
+      "Student dashboard showing percentage of course completed",
+      "Automatic PDF certificate generation with student name",
+      "Instructor dashboard to upload videos and track student enrollments"
     ],
     technologies: ["React.js", "Node.js", "Express.js", "MongoDB", "PDFKit", "JWT"],
-    idealFor: "EdTech startups, training academies, and internal employee certification."
+    idealFor: "Coaches, educators, training academies, and companies onboarding new employees."
   },
   {
     id: "admin-dashboards-internal-tools",
     number: "10",
     title: "Admin Dashboards & Internal Tools",
-    shortDescription: "Operational back-offices, data visualization, user management, and KPI analytics.",
-    fullDescription: "Empower your team with intuitive internal tools. We build custom admin dashboards featuring multi-role permissions, interactive data tables with filtering and export, KPI analytics charts, and operational audit logs.",
+    shortDescription: "Clear internal dashboards to track your sales, manage customers, and view business analytics in one place.",
+    fullDescription: "Stop jumping between different spreadsheets. We build clean admin dashboards where your team can view real-time sales charts, manage customer accounts, update inventory, and export reports with one click.",
     deliverables: [
-      "Multi-metric analytics & KPI dashboards",
-      "Data tables with sorting, filtering & CSV export",
-      "User & customer management console",
-      "Activity audit logs & system health monitors",
-      "Secure backend CRUD administration"
+      "Visual graphs showing revenue, sign-ups, and key business metrics",
+      "Searchable data tables with sorting and Excel/CSV download",
+      "Customer management tools to view, edit, or remove records",
+      "Staff permission settings so team members see only what they need",
+      "Activity logs showing recent actions and order histories"
     ],
     technologies: ["React.js", "Tailwind CSS", "Recharts", "Node.js", "PostgreSQL"],
-    idealFor: "Growing businesses replacing disconnected spreadsheets with unified dashboards."
+    idealFor: "Growing companies wanting to centralize their business operations and reporting."
   },
   {
     id: "maintenance-support-retainers",
     number: "11",
     title: "Post-Launch Maintenance & Support Retainers",
-    shortDescription: "Ongoing monitoring, security patching, dependency upgrades, and on-demand feature iterations.",
-    fullDescription: "Software isn't finished when it ships. Our ongoing retainers provide dedicated developer hours for routine security audits, performance optimization, dependency updates, bug fixes, and continuous feature expansion.",
+    shortDescription: "Peace-of-mind monthly support covering security updates, bug fixes, backups, and small feature additions.",
+    fullDescription: "You run your business—we'll keep your website running smoothly. Our monthly support plans include regular software updates, daily backups, security monitoring, quick bug fixes, and a developer ready when you need help.",
     deliverables: [
-      "Monthly security & dependency updates",
-      "Uptime monitoring & error tracking",
-      "Performance optimization & database tuning",
-      "Priority bug fixes & developer support",
-      "Continuous feature iteration backlog"
+      "Regular software, security, and plugin updates",
+      "Daily or weekly automatic backups stored safely",
+      "Uptime monitoring so you're alerted immediately if anything goes down",
+      "Quick bug fixes and minor content updates on demand",
+      "Monthly performance report and developer check-in"
     ],
     technologies: ["Git", "GitHub Actions", "Vercel", "Sentry", "AWS Monitoring"],
-    idealFor: "Companies and founders needing an ongoing technical partner post-launch."
+    idealFor: "Busy business owners who want reliable website upkeep without hiring full-time staff."
   }
 ];

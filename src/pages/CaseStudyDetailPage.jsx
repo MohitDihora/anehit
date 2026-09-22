@@ -34,10 +34,7 @@ export default function CaseStudyDetailPage() {
         <div className="studio-card p-6 sm:p-10 md:p-12 border-slate-200 bg-white mb-10 sm:mb-12 shadow-sm">
           <div className="max-w-3xl space-y-4">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-0.5 rounded font-bold">
-                {study.figNumber}
-              </span>
-              <span className="font-mono text-xs text-slate-500 uppercase font-medium">
+              <span className="font-mono text-xs text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-0.5 rounded font-bold uppercase tracking-wider">
                 {study.category}
               </span>
             </div>
@@ -77,7 +74,7 @@ export default function CaseStudyDetailPage() {
         <div className="mb-12 sm:mb-14">
           <div className="text-xs font-mono text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2 font-semibold">
             <Terminal className="w-3.5 h-3.5 text-sky-600" />
-            <span>07 — Interface Presentation & Interactive Preview</span>
+            <span>07 — Production Architecture & Deliverables Summary</span>
           </div>
           <div className="w-full overflow-hidden">
             <ProjectMockupRenderer projectId={study.id} />

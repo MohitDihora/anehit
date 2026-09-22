@@ -9,7 +9,7 @@ export default function ProjectDetailPage() {
   const projectIndex = projects.findIndex((p) => p.id === projectId);
 
   if (projectIndex === -1) {
-    return <Navigate to="/work" replace />;
+    return <Navigate to="/case-studies" replace />;
   }
 
   const project = projects[projectIndex];
@@ -22,11 +22,11 @@ export default function ProjectDetailPage() {
         {/* Back Link */}
         <div className="mb-6 sm:mb-8">
           <Link
-            to="/work"
+            to="/case-studies"
             className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 hover:text-sky-700 transition-colors font-medium"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to All Work</span>
+            <span>Back to All Case Studies</span>
           </Link>
         </div>
 
@@ -81,7 +81,7 @@ export default function ProjectDetailPage() {
         <div className="mb-12 sm:mb-16">
           <div className="text-xs font-mono text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2 font-semibold">
             <Terminal className="w-3.5 h-3.5 text-sky-600" />
-            <span>Interactive Application Preview & Interface Simulator</span>
+            <span>Production Architecture & Engineering Outcomes</span>
           </div>
           <div className="w-full overflow-hidden">
             <ProjectMockupRenderer projectId={project.id} />
@@ -222,10 +222,10 @@ export default function ProjectDetailPage() {
         {/* Next Project Footer Bar */}
         <div className="pt-8 sm:pt-10 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="font-mono text-xs text-slate-400 font-medium">
-            NEXT FEATURED PROJECT
+            NEXT CASE STUDY
           </span>
           <Link
-            to={`/work/${nextProject.id}`}
+            to={`/case-studies/${nextProject.id}`}
             className="flex items-center gap-2 text-slate-950 hover:text-sky-700 font-display font-bold text-lg group transition-colors"
           >
             <span>{nextProject.title}</span>

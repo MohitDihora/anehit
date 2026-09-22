@@ -1,14 +1,12 @@
 import React from 'react';
 import SectionHeader from '../common/SectionHeader';
 import { processSteps } from '../../data/techStack';
-import { ArrowRight } from 'lucide-react';
 
 export default function ProcessSection() {
   return (
     <section className="py-16 sm:py-20 md:py-28 bg-[#f8fafc] border-b border-slate-200">
       <div className="studio-container">
         <SectionHeader
-          figNumber="FIG. 05"
           label="Development Methodology"
           title="From Idea to Launch"
           subtitle="A structured, six-stage engineering process designed to eliminate surprises, align technical architecture, and ship reliable software."
@@ -31,9 +29,6 @@ export default function ProcessSection() {
                       {step.phase}
                     </span>
                   </div>
-                  {idx < 5 && (
-                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-sky-600 group-hover:translate-x-1 transition-all hidden lg:block" />
-                  )}
                 </div>
 
                 <h3 className="font-display font-bold text-lg text-slate-900 mb-2 group-hover:text-sky-700 transition-colors">
@@ -47,7 +42,6 @@ export default function ProcessSection() {
 
               <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-400">
                 <span>Phase 0{idx + 1} of 06</span>
-                <span className="text-sky-700 font-medium">Accountable Delivery</span>
               </div>
             </div>
           ))}

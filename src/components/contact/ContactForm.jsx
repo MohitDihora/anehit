@@ -71,7 +71,6 @@ export default function ContactForm() {
     <section id="contact" className="py-16 sm:py-20 md:py-28 bg-[#f8fafc] border-b border-slate-200">
       <div className="studio-container">
         <SectionHeader
-          figNumber="FIG. 08"
           label="Direct Inquiries"
           title="Let's Talk About Your Project"
           subtitle="Have an idea, business requirement or existing product that needs development? Tell us about it."

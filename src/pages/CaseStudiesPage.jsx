@@ -24,8 +24,18 @@ export default function CaseStudiesPage() {
         </div>
 
         {/* Case Studies Catalog */}
-        <div className="space-y-10 sm:space-y-12">
-          {caseStudies.map((study) => (
+        {caseStudies.length === 0 ? (
+          <div className="py-14 sm:py-18 px-6 sm:px-10 rounded-2xl bg-white border border-slate-200/90 shadow-sm max-w-xl mx-auto text-center space-y-4 my-8">
+            <h3 className="font-display font-bold text-xl sm:text-2xl text-slate-900 tracking-tight">
+              No Case Studies Published Yet
+            </h3>
+            <p className="text-slate-600 text-sm leading-relaxed max-w-md mx-auto">
+              Our engineering case studies are being documented. Please check back soon or explore our live project portfolio.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-10 sm:space-y-12">
+            {caseStudies.map((study) => (
             <div
               key={study.id}
               className="studio-card p-6 sm:p-8 md:p-10 border-slate-200 bg-white hover:border-slate-300 transition-all shadow-sm"
@@ -35,10 +45,7 @@ export default function CaseStudiesPage() {
                 {/* Left meta & summary */}
                 <div className="lg:col-span-6 space-y-4">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-0.5 rounded font-semibold">
-                      {study.figNumber}
-                    </span>
-                    <span className="font-mono text-xs text-slate-500 uppercase">
+                    <span className="font-mono text-xs text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-0.5 rounded font-semibold uppercase tracking-wider">
                       {study.category}
                     </span>
                   </div>
@@ -92,6 +99,7 @@ export default function CaseStudiesPage() {
             </div>
           ))}
         </div>
+        )}
 
       </div>
     </div>

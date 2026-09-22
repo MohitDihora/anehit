@@ -1,16 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  ExternalLink, 
-  ArrowUpRight, 
-  CheckCircle2, 
-  ChevronDown, 
-  ChevronUp,
-  Sparkles,
-  Layers,
-  Cpu,
-  Globe,
-  Layout
+import {
+  ExternalLink,
+  ArrowUpRight,
+  CheckCircle2
 } from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
 import { projects } from '../../data/projects';
@@ -18,92 +11,33 @@ import ProjectMockupRenderer from '../ui/ProjectMockupRenderer';
 import ScrollStack, { ScrollStackItem } from '../ui/ScrollStack';
 
 export default function FeaturedWorkSection() {
-  const [activeFilter, setActiveFilter] = useState('All');
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  // Category definitions with clean readable labels and icons
-  const categories = [
-    { id: 'All', label: 'All Projects', count: 6, icon: Sparkles },
-    { id: 'AI', label: 'AI Applications', count: 2, icon: Cpu },
-    { id: 'Web Apps', label: 'Web Apps', count: 2, icon: Globe },
-    { id: 'Full Stack', label: 'Full Stack', count: 2, icon: Layers },
-    { id: 'Business Websites', label: 'Brand Sites', count: 1, icon: Layout },
-  ];
-
-  const allFiltered = activeFilter === 'All'
-    ? projects
-    : projects.filter((p) => p.filterCategory === activeFilter);
-
-  // Show top 3 by default when on "All" unless user expands
-  const displayedProjects = (activeFilter === 'All' && !isExpanded)
-    ? allFiltered.slice(0, 3)
-    : allFiltered;
+  const displayedProjects = projects.slice(0, 2);
 
   return (
-    <section id="work" className="py-16 sm:py-20 md:py-28 bg-[#f8fafc] border-b border-slate-200">
+    <section id="case-studies" className="py-16 sm:py-20 md:py-28 bg-[#f8fafc] border-b border-slate-200">
       <div className="studio-container">
-        
-        {/* Header and Redesigned Modern Filter Bar */}
-        <SectionHeader
-          figNumber="FIG. 02"
-          label="Real Portfolio"
-          title="Selected Work & Deployments"
-          subtitle="Explore our real-world software products, live applications, and full-stack systems with transparent architecture and verifiable links."
-          centered={true}
-          className="mb-8 sm:mb-10"
-        />
 
-        {/* Attractive, Modern Segmented Filter Bar - Perfectly Centered & Aligned */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-10 sm:mb-14">
-          {/* Filter Pills Container */}
-          <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-white border border-slate-200 shadow-sm overflow-x-auto no-scrollbar max-w-full">
-            {categories.map((cat) => {
-              const Icon = cat.icon;
-              const isActive = activeFilter === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => {
-                    setActiveFilter(cat.id);
-                    setIsExpanded(false);
-                  }}
-                  className={`flex items-center gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 whitespace-nowrap cursor-pointer ${
-                    isActive
-                      ? 'bg-slate-950 text-white shadow-md shadow-slate-950/20'
-                      : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100'
-                  }`}
-                >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-sky-400' : 'text-slate-400'}`} />
-                  <span>{cat.label}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-md font-mono ${
-                    isActive ? 'bg-slate-800 text-sky-300' : 'bg-slate-100 text-slate-500'
-                  }`}>
-                    {cat.count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+        {/* Header with Opposite CTA - Centered vertically across the header title */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 sm:mb-12 gap-5">
+          <SectionHeader
+            label="Behind the Build"
+            title="Case Studies & Deployments"
+            subtitle="Explore the engineering decisions, technical architecture, and verified production outcomes behind our delivered systems."
+            className="mb-0"
+          />
 
-          {/* Interactive Collapse / Expand Action Button */}
-          {activeFilter === 'All' && (
-            <button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all shadow-sm cursor-pointer whitespace-nowrap"
-            >
-              <span>{isExpanded ? 'Show Top 3 Projects' : `Show All ${projects.length} Deployments`}</span>
-              {isExpanded ? (
-                <ChevronUp className="w-4 h-4 text-slate-500" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-slate-500" />
-              )}
-            </button>
-          )}
+          <Link
+            to="/case-studies"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-sky-600 text-white text-sm font-semibold transition-all shadow-sm active:scale-98 shrink-0 self-start sm:self-center"
+          >
+            <span>Explore All Case Studies ({projects.length})</span>
+            <ArrowUpRight className="w-4 h-4 text-sky-400" />
+          </Link>
         </div>
 
-        {/* Caspian-Style Animated Sticky Stacking Deck */}
+        {/* Case Studies Cards Stack */}
         <ScrollStack
-          key={activeFilter + (isExpanded ? '-exp' : '-col')}
+          key="featured-case-studies"
           itemDistance={40}
           itemScale={0.025}
           itemStackDistance={24}
@@ -128,7 +62,7 @@ export default function FeaturedWorkSection() {
                     {/* Index & Category Badges with Readable Fonts */}
                     <div className="flex flex-wrap items-center gap-2.5">
                       <span className="font-mono text-xs font-bold text-sky-800 bg-sky-50 border border-sky-200 px-3 py-1 rounded-lg">
-                        PROJECT {projectNumber}
+                        CASE STUDY {projectNumber}
                       </span>
                       <span className="studio-badge bg-slate-100 text-slate-800 border-slate-200 text-xs font-semibold py-1">
                         {project.category}
@@ -204,10 +138,10 @@ export default function FeaturedWorkSection() {
                         </a>
                       )}
                       <Link
-                        to={`/work/${project.id}`}
+                        to={`/case-studies/${project.id}`}
                         className="inline-flex items-center gap-1.5 text-sm font-bold text-sky-700 hover:text-sky-900 transition-colors py-2"
                       >
-                        <span>Full Project Architecture →</span>
+                        <span>Full Case Study Architecture →</span>
                       </Link>
                     </div>
                   </div>
@@ -222,35 +156,6 @@ export default function FeaturedWorkSection() {
             );
           })}
         </ScrollStack>
-
-        {/* Bottom Expand Toggle Bar */}
-        <div className="mt-12 sm:mt-14 flex flex-col sm:flex-row items-center justify-center gap-3.5">
-          {activeFilter === 'All' && (
-            <button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-sm font-bold text-slate-800 hover:text-slate-950 transition-all shadow-sm cursor-pointer"
-            >
-              <span>
-                {isExpanded
-                  ? 'Collapse to Top 3 Projects ↑'
-                  : `Show All 6 Deployments (3 more) ↓`}
-              </span>
-              {isExpanded ? (
-                <ChevronUp className="w-4 h-4 text-sky-600" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-sky-600" />
-              )}
-            </button>
-          )}
-
-          <Link
-            to="/work"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 hover:bg-sky-600 text-white text-sm font-semibold transition-colors shadow-sm"
-          >
-            <span>Explore Dedicated Work Page</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </Link>
-        </div>
       </div>
     </section>
   );

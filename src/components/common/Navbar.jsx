@@ -25,11 +25,10 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', path: '/', icon: Home, num: '01' },
     { name: 'Services', path: '/services', icon: Layers, num: '02' },
-    { name: 'Work', path: '/work', icon: Briefcase, num: '03' },
-    { name: 'Case Studies', path: '/case-studies', icon: FileText, num: '04' },
-    { name: 'Technology', path: '/technology', icon: Cpu, num: '05' },
-    { name: 'About', path: '/about', icon: Users, num: '06' },
-    { name: 'Contact', path: '/contact', icon: Mail, num: '07' },
+    { name: 'Case Studies', path: '/case-studies', icon: Briefcase, num: '03' },
+    { name: 'Technology', path: '/technology', icon: Cpu, num: '04' },
+    { name: 'About', path: '/about', icon: Users, num: '05' },
+    { name: 'Contact', path: '/contact', icon: Mail, num: '06' },
   ];
 
 
@@ -59,6 +58,12 @@ export default function Navbar() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const isLinkActive = (path) => {
+    if (path === '/') return location.pathname === '/';
+    if (path === '/case-studies') return location.pathname.startsWith('/case-studies') || location.pathname.startsWith('/case-study') || location.pathname.startsWith('/work');
+    return location.pathname.startsWith(path);
+  };
+
   return (
     <>
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 transition-all shadow-xs">
@@ -78,10 +83,15 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-extrabold text-xl sm:text-2xl tracking-tight text-slate-950 group-hover:text-sky-600 transition-colors">
-                AneHit
-              </span>
-              <span className="text-xs text-slate-500 tracking-wider uppercase font-semibold hidden sm:block">
+              <div className="flex items-center gap-1.5">
+                <span className="font-display font-black text-xl sm:text-2xl text-slate-950 tracking-tight leading-none group-hover:text-sky-600 transition-colors">
+                  AneHit
+                </span>
+                <span className="text-[10px] font-mono font-bold text-sky-700 bg-sky-50 border border-sky-200 px-1.5 py-0.5 rounded leading-none">
+                  STUDIO
+                </span>
+              </div>
+              <span className="text-[11px] font-mono text-slate-500 tracking-wider uppercase font-semibold mt-0.5">
                 Ideas to Impact
               </span>
             </div>
@@ -90,7 +100,7 @@ export default function Navbar() {
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2.5">
             {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
+              const isActive = isLinkActive(link.path);
               return (
                 <Link
                   key={link.name}
@@ -210,7 +220,7 @@ export default function Navbar() {
             </div>
 
             {navLinks.map((link, idx) => {
-              const isActive = location.pathname === link.path;
+              const isActive = isLinkActive(link.path);
               const Icon = link.icon;
               return (
                 <Link

@@ -84,31 +84,35 @@ export const ScrollStack = ({
   }, [baseTop, itemStackDistance, scaleStep]);
 
   useEffect(() => {
-    // 1. Initialize Lenis for smooth momentum scrolling
-    try {
-      const lenis = new Lenis({
-        duration: 1.1,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-        touchMultiplier: 1.3,
-        infinite: false,
-      });
+    const handleScroll = () => {
+      updateCardScales();
+    };
 
-      const handleScroll = () => {
-        updateCardScales();
-      };
+    let localLenis = null;
+    if (window.__lenis) {
+      window.__lenis.on('scroll', handleScroll);
+    } else {
+      try {
+        localLenis = new Lenis({
+          duration: 1.1,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+          touchMultiplier: 1.3,
+          infinite: false,
+        });
 
-      lenis.on('scroll', handleScroll);
+        localLenis.on('scroll', handleScroll);
 
-      const raf = (time) => {
-        lenis.raf(time);
+        const raf = (time) => {
+          localLenis.raf(time);
+          animationFrameRef.current = requestAnimationFrame(raf);
+        };
         animationFrameRef.current = requestAnimationFrame(raf);
-      };
-      animationFrameRef.current = requestAnimationFrame(raf);
 
-      lenisRef.current = lenis;
-    } catch (err) {
-      console.warn('Lenis smooth scroll initialization skipped:', err);
+        lenisRef.current = localLenis;
+      } catch (err) {
+        console.warn('Lenis smooth scroll initialization skipped:', err);
+      }
     }
 
     // 2. Native scroll & resize listeners for rock-solid 60/120fps updates
@@ -123,11 +127,14 @@ export const ScrollStack = ({
     updateCardScales();
 
     return () => {
+      if (window.__lenis) {
+        window.__lenis.off('scroll', handleScroll);
+      }
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
-      if (lenisRef.current) {
-        lenisRef.current.destroy();
+      if (localLenis) {
+        localLenis.destroy();
       }
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);

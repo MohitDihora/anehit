@@ -13,10 +13,9 @@ export default function CaseStudiesSection() {
       <div className="studio-container">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-12 gap-4">
           <SectionHeader
-            figNumber="FIG. 03"
-            label="In-Depth Technical Analysis"
-            title="Behind the Build"
-            subtitle="We don't just show screenshots. We explain the architectural thinking, development challenges and delivered solution behind every product."
+            label="Architectural Deep Dives"
+            title="Engineering Challenges & Solutions"
+            subtitle="We don't just show screenshots. We break down the technical constraints, architectural tradeoffs, and measurable solutions behind every product."
             className="mb-0"
           />
 
@@ -41,10 +40,7 @@ export default function CaseStudiesSection() {
                 {/* Left meta & title */}
                 <div className="lg:col-span-4 space-y-4">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-1 rounded-md font-semibold">
-                      {study.figNumber}
-                    </span>
-                    <span className="font-mono text-xs text-slate-500 uppercase tracking-wider font-medium">
+                    <span className="font-mono text-xs text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-1 rounded-md font-semibold uppercase tracking-wider">
                       {study.category}
                     </span>
                   </div>

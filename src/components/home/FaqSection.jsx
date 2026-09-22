@@ -15,13 +15,12 @@ export default function FaqSection() {
     <section id="faq" className="py-16 sm:py-20 md:py-28 bg-[#f8fafc] border-b border-slate-200">
       <div className="studio-container">
         <SectionHeader
-          figNumber="FIG. 07"
           label="Transparency & Clarity"
           title="Frequently Asked Questions"
-          subtitle="Direct answers to common questions about timelines, pricing, intellectual property, and how we collaborate."
+          subtitle="Direct answers to common questions about timelines, workflows, code ownership, and how we collaborate."
         />
 
-        <div className="max-w-4xl mx-auto">
+        <div className="w-full">
           {/* FAQ Accordion List */}
           <div className="space-y-3 sm:space-y-4">
             {faqs.map((faq, index) => {
@@ -29,7 +28,7 @@ export default function FaqSection() {
               return (
                 <div
                   key={index}
-                  className={`rounded-xl border transition-all duration-200 overflow-hidden ${
+                  className={`rounded-xl border transition-all duration-300 overflow-hidden ${
                     isOpen
                       ? 'bg-white border-sky-200 shadow-sm'
                       : 'bg-white/80 border-slate-200 hover:border-slate-300'
@@ -44,23 +43,30 @@ export default function FaqSection() {
                       {faq.question}
                     </span>
                     <div
-                      className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border transition-all duration-200 ${
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border transition-all duration-300 ${
                         isOpen
                           ? 'bg-sky-50 border-sky-200 text-sky-600 rotate-180'
                           : 'bg-slate-50 border-slate-200 text-slate-400'
                       }`}
                     >
-                      <ChevronDown className="w-4 h-4" />
+                      <ChevronDown className="w-4 h-4 transition-transform duration-300" />
                     </div>
                   </button>
 
-                  {isOpen && (
-                    <div className="px-5 sm:px-6 pb-6 pt-1 border-t border-slate-100 animate-fadeIn">
-                      <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                        {faq.answer}
-                      </p>
+                  {/* Smooth CSS Grid Accordion Collapse/Expand */}
+                  <div
+                    className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+                      isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-5 sm:px-6 pb-6 pt-1 border-t border-slate-100">
+                        <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}

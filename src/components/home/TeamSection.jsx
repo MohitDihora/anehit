@@ -8,7 +8,6 @@ export default function TeamSection() {
     <section id="about" className="py-16 sm:py-20 md:py-28 bg-[#f8fafc] border-b border-slate-200">
       <div className="studio-container">
         <SectionHeader
-          figNumber="FIG. 07"
           label="Founding Engineers"
           title="A Small Team. Serious About Building."
           subtitle={studioInfo.positioning}
