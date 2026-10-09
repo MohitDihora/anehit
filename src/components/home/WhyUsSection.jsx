@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { 
-  MessageSquareCode, 
-  Code2, 
-  Target, 
-  ShieldCheck, 
+import {
+  MessageSquareCode,
+  Code2,
+  Target,
+  ShieldCheck,
   Award,
-  ChevronLeft, 
-  ChevronRight, 
-  CheckCircle2, 
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle2,
   Sparkles,
   ArrowRight
 } from 'lucide-react';
@@ -182,9 +182,9 @@ export default function WhyUsSection() {
   const Icon = currentPillar.icon;
 
   return (
-    <section 
-      id="why-us" 
-      className="py-16 sm:py-20 md:py-28 bg-white border-b border-slate-200 relative overflow-hidden select-none"
+    <section
+      id="why-us"
+      className="py-16 sm:py-20 md:py-20 bg-white border-b border-slate-200 relative overflow-hidden select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => {
         setIsPaused(false);
@@ -192,7 +192,7 @@ export default function WhyUsSection() {
       }}
     >
       <div className="studio-container">
-        
+
         {/* Section Header with Navigation Controls */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-6">
           <SectionHeader
@@ -229,7 +229,7 @@ export default function WhyUsSection() {
         </div>
 
         {/* Swipe Card Stage with Overflow Hidden - with vertical padding to prevent border/shadow clipping */}
-        <div 
+        <div
           ref={trackRef}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -240,7 +240,7 @@ export default function WhyUsSection() {
           className="relative w-full overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y py-4 px-1.5 -my-4 -mx-1.5"
         >
           {/* Multi-Card Sliding Track */}
-          <div 
+          <div
             className="flex items-stretch will-change-transform"
             style={{
               transform: `translateX(calc(-${currentIndex * 100}% + ${dragOffset}px))`,
@@ -252,7 +252,7 @@ export default function WhyUsSection() {
               const isActive = idx === currentIndex;
 
               return (
-                <div 
+                <div
                   key={pillar.id}
                   className="w-full shrink-0 flex-none px-1.5 sm:px-2 box-border transition-all duration-300"
                   style={{
@@ -262,15 +262,15 @@ export default function WhyUsSection() {
                   }}
                 >
                   <div className="p-6 sm:p-10 md:p-12 bg-white border border-slate-200 hover:border-slate-300 rounded-2xl sm:rounded-3xl relative overflow-hidden h-full flex flex-col justify-between">
-                    
+
                     {/* Subtle Ambient Background Radial Tint */}
-                    <div 
+                    <div
                       className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl pointer-events-none transition-all duration-700 opacity-60"
                       style={{ background: pillar.glow }}
                     />
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 flex-grow">
-                      
+
                       {/* Left Narrative Column */}
                       <div className="lg:col-span-7 space-y-5">
                         <div className="flex flex-wrap items-center gap-3">
@@ -349,11 +349,10 @@ export default function WhyUsSection() {
               key={idx}
               onClick={() => setCurrentIndex(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentIndex
+              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === currentIndex
                   ? 'w-8 bg-slate-950 shadow-xs'
                   : 'w-2.5 bg-slate-200 hover:bg-slate-300'
-              }`}
+                }`}
             />
           ))}
         </div>

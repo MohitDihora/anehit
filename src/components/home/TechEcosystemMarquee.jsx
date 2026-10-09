@@ -126,7 +126,7 @@ const row2Techs = [
 
 export default function TechEcosystemMarquee() {
   return (
-    <section className="py-14 sm:py-18 md:py-24 bg-white border-b border-slate-200 overflow-hidden relative">
+    <section className="py-14 sm:py-18 md:py-20 bg-white border-b border-slate-200 overflow-hidden relative">
       <div className="studio-container text-center mb-10 sm:mb-12">
         {/* Pill Badge matching reference */}
         <div className="inline-flex items-center justify-center mb-4">

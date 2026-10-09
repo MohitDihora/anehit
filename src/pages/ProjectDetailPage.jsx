@@ -3,10 +3,18 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { projects } from '../data/projects';
 import { ExternalLink, ArrowRight, ArrowLeft, CheckCircle2, Terminal } from 'lucide-react';
 import ProjectMockupRenderer from '../components/ui/ProjectMockupRenderer';
+import BottomCtaSection from '../components/common/BottomCtaSection';
 
 export default function ProjectDetailPage() {
   const { projectId } = useParams();
-  const projectIndex = projects.findIndex((p) => p.id === projectId);
+  const normalizedId = 
+    projectId === 'multitranslate-ai' ? 'bolo-translator' :
+    projectId === 'agenstory' ? 'gen-story' :
+    projectId === 'officialcoders' ? 'official-coders' :
+    projectId === 'online-examination-systems' ? 'online-examination-system' :
+    projectId;
+
+  const projectIndex = projects.findIndex((p) => p.id === normalizedId);
 
   if (projectIndex === -1) {
     return <Navigate to="/case-studies" replace />;
@@ -62,7 +70,18 @@ export default function ProjectDetailPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-900 hover:bg-sky-600 text-white font-semibold text-xs transition-colors shadow-sm"
                 >
-                  <span>View Live Application</span>
+                  <span>{project.adminUrl ? "View Student App" : "View Live Application"}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {project.adminUrl && (
+                <a
+                  href={project.adminUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-sky-50 hover:bg-sky-100 border border-sky-300 text-sky-800 font-semibold text-xs transition-colors shadow-sm"
+                >
+                  <span>View Admin Portal</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               )}
@@ -220,7 +239,7 @@ export default function ProjectDetailPage() {
         </div>
 
         {/* Next Project Footer Bar */}
-        <div className="pt-8 sm:pt-10 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="pt-8 sm:pt-10 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 mb-12 sm:mb-16">
           <span className="font-mono text-xs text-slate-400 font-medium">
             NEXT CASE STUDY
           </span>
@@ -232,6 +251,17 @@ export default function ProjectDetailPage() {
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
+
+        {/* Bottom CTA Consultation Section */}
+        <BottomCtaSection 
+          title="Want to Build a Similar Digital Product?"
+          description="From custom web architectures to complex API integrations, our engineering team is ready to build your product."
+          primaryBtnText="Start a Technical Conversation"
+          primaryBtnLink="/contact"
+          secondaryBtnText="View All Case Studies"
+          secondaryBtnLink="/case-studies"
+          className="pb-4"
+        />
 
       </div>
     </div>

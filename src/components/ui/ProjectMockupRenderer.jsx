@@ -24,21 +24,35 @@ export default function ProjectMockupRenderer({ projectId }) {
           </span>
         </div>
 
-        {project.liveUrl ? (
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/90 text-emerald-800 text-xs font-mono font-bold transition-colors"
-          >
-            <span>Live Production URL</span>
-            <ExternalLink className="w-3 h-3 text-emerald-700" />
-          </a>
-        ) : (
-          <span className="text-xs font-mono font-medium px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">
-            Verified Production Delivery
-          </span>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/90 text-emerald-800 text-xs font-mono font-bold transition-colors"
+            >
+              <span>{project.adminUrl ? "Student App" : "Live Production URL"}</span>
+              <ExternalLink className="w-3 h-3 text-emerald-700" />
+            </a>
+          )}
+          {project.adminUrl && (
+            <a
+              href={project.adminUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 hover:bg-sky-100 border border-sky-200/90 text-sky-800 text-xs font-mono font-bold transition-colors"
+            >
+              <span>Admin App</span>
+              <ExternalLink className="w-3 h-3 text-sky-700" />
+            </a>
+          )}
+          {!project.liveUrl && !project.adminUrl && (
+            <span className="text-xs font-mono font-medium px-2.5 py-0.5 rounded-full bg-slate-200/70 text-slate-700">
+              Verified Production Delivery
+            </span>
+          )}
+        </div>
       </div>
 
       {/* The Real Challenge */}

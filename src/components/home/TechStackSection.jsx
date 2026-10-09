@@ -1,11 +1,11 @@
 import React from 'react';
-import { 
-  Cpu, 
-  Server, 
-  Database, 
-  Bot, 
-  Cloud, 
-  ShieldCheck, 
+import {
+  Cpu,
+  Server,
+  Database,
+  Bot,
+  Cloud,
+  ShieldCheck,
 } from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
 
@@ -77,16 +77,12 @@ function TechLogo({ name, className = "w-5 h-5" }) {
           <path d="M12 2C11.5 2 7 8 7 13.5c0 3.6 2.2 6.5 5 7.5v-19zm0 0c.5 0 5 6 5 11.5 0 3.6-2.2 6.5-5 7.5v-19z" />
         </svg>
       );
-    case 'Redis Cache':
-      return (
-        <svg viewBox="0 0 24 24" className={className} fill="currentColor">
-          <path d="M12 2L2 7l10 5 10-5-10-5zm0 8l-8.5-4.25L2 12l10 5 10-5-1.5-6.25L12 10zm0 7l-8.5-4.25L2 17l10 5 10-5-1.5-4.25L12 17z" />
-        </svg>
-      );
-    case 'Prisma ORM':
+    case 'MySQL':
       return (
         <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 20L12 4l8 16H4zm8-13v13" />
+          <ellipse cx="12" cy="5" rx="9" ry="3" />
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+          <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
         </svg>
       );
     case 'OpenAI & Claude':
@@ -221,22 +217,21 @@ export default function TechStackSection({
     {
       id: "database",
       tierNum: "03",
-      systemTag: "PERSISTENCE & CACHE",
+      systemTag: "PERSISTENCE & STORAGE",
       name: "Databases & Data Integrity",
-      headline: "ACID-compliant transactions, optimized indexing, and low-latency in-memory cache.",
+      headline: "ACID-compliant transactions, optimized indexing, and robust relational storage.",
       accentBg: "bg-indigo-50 text-indigo-600 border-indigo-200",
       accentBorder: "border-indigo-300",
       icon: Database,
       stats: [
         { label: "Query Speed", val: "4ms Avg" },
         { label: "Transactions", val: "ACID Strict" },
-        { label: "Cache Read", val: "< 1ms" },
+        { label: "Data Integrity", val: "100%" },
       ],
       technologies: [
         { name: "PostgreSQL", category: "Relational SQL", benefit: "Relational constraints, B-Tree indexes, JSONB & rock-solid backups" },
+        { name: "MySQL", category: "Relational SQL", benefit: "High-performance transactional engine, strict ACID compliance & widespread compatibility" },
         { name: "MongoDB", category: "Document Store", benefit: "Flexible unstructured catalogs, nested objects & agile schemas" },
-        { name: "Redis Cache", category: "In-Memory Store", benefit: "Sub-millisecond session state, rate limiters & pub/sub messaging" },
-        { name: "Prisma ORM", category: "Schema & Migrations", benefit: "Type-safe database client with declarative automatic schema migrations" },
       ]
     },
     {
@@ -305,9 +300,9 @@ export default function TechStackSection({
   ];
 
   return (
-    <section className="py-14 sm:py-18 md:py-24 bg-[#f8fafc] border-b border-slate-200/90">
+    <section className="py-14 sm:py-18 md:py-20 bg-[#f8fafc] border-b border-slate-200/90">
       <div className="studio-container">
-        
+
         {/* Section Header */}
         <SectionHeader
           label="Proven Technology Stack"
@@ -325,56 +320,56 @@ export default function TechStackSection({
                 key={tier.id}
                 className="p-6 sm:p-7 rounded-[28px] bg-white border border-slate-200/90 shadow-2xs hover:shadow-xl hover:border-sky-300 transition-all duration-300 flex flex-col justify-between group"
               >
-                  <div>
-                    {/* Header */}
-                    <div className="flex items-center pb-4 mb-4 border-b border-slate-100">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-10 h-10 rounded-xl bg-slate-950 text-white flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors shadow-2xs">
-                          <Icon className="w-5 h-5 text-sky-400 group-hover:text-white transition-colors" />
-                        </div>
-                        <div>
-                          <span className="font-mono text-xs font-bold text-slate-900 block leading-tight">
-                            TIER {tier.tierNum}
-                          </span>
-                          <span className="font-mono text-[10px] text-sky-700 font-semibold uppercase tracking-wider block">
-                            {tier.systemTag}
-                          </span>
-                        </div>
+                <div>
+                  {/* Header */}
+                  <div className="flex items-center pb-4 mb-4 border-b border-slate-100">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-10 h-10 rounded-xl bg-slate-950 text-white flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors shadow-2xs">
+                        <Icon className="w-5 h-5 text-sky-400 group-hover:text-white transition-colors" />
                       </div>
-                    </div>
-
-                    {/* Tier Title & Description */}
-                    <h3 className="font-display font-bold text-xl text-slate-950 mb-2 group-hover:text-sky-700 transition-colors">
-                      {tier.name}
-                    </h3>
-                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6">
-                      {tier.headline}
-                    </p>
-
-                    {/* Clean Tech Pills Matrix */}
-                    <div className="space-y-2">
-                      <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold mb-2">
-                        Key Technologies:
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {tier.technologies.map((t, i) => (
-                          <div
-                            key={i}
-                            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-slate-950 hover:text-white hover:border-slate-900 transition-all duration-200 group/pill cursor-default"
-                          >
-                            <TechLogo name={t.name} className="w-4 h-4 shrink-0" />
-                            <span className="text-xs font-semibold text-slate-800 group-hover/pill:text-white transition-colors">
-                              {t.name}
-                            </span>
-                          </div>
-                        ))}
+                      <div>
+                        <span className="font-mono text-xs font-bold text-slate-900 block leading-tight">
+                          TIER {tier.tierNum}
+                        </span>
+                        <span className="font-mono text-[10px] text-sky-700 font-semibold uppercase tracking-wider block">
+                          {tier.systemTag}
+                        </span>
                       </div>
                     </div>
                   </div>
+
+                  {/* Tier Title & Description */}
+                  <h3 className="font-display font-bold text-xl text-slate-950 mb-2 group-hover:text-sky-700 transition-colors">
+                    {tier.name}
+                  </h3>
+                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6">
+                    {tier.headline}
+                  </p>
+
+                  {/* Clean Tech Pills Matrix */}
+                  <div className="space-y-2">
+                    <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold mb-2">
+                      Key Technologies:
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {tier.technologies.map((t, i) => (
+                        <div
+                          key={i}
+                          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-slate-950 hover:text-white hover:border-slate-900 transition-all duration-200 group/pill cursor-default"
+                        >
+                          <TechLogo name={t.name} className="w-4 h-4 shrink-0" />
+                          <span className="text-xs font-semibold text-slate-800 group-hover/pill:text-white transition-colors">
+                            {t.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
+        </div>
 
 
 

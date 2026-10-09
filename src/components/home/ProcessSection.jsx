@@ -4,7 +4,7 @@ import { processSteps } from '../../data/techStack';
 
 export default function ProcessSection() {
   return (
-    <section className="py-16 sm:py-20 md:py-28 bg-[#f8fafc] border-b border-slate-200">
+    <section className="py-16 sm:py-20 md:py-20 bg-[#f8fafc] border-b border-slate-200">
       <div className="studio-container">
         <SectionHeader
           label="Development Methodology"

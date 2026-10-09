@@ -1,20 +1,21 @@
 import React, { useState, useMemo } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { services } from '../data/services';
-import { 
-  CheckCircle2, 
-  ArrowUpRight, 
+import BottomCtaSection from '../components/common/BottomCtaSection';
+import {
+  CheckCircle2,
+  ArrowUpRight,
   ArrowLeft,
-  Code2, 
-  Smartphone, 
-  ShoppingBag, 
-  CreditCard, 
-  Sparkles, 
-  Bot, 
-  ShieldCheck, 
-  Radio, 
-  GraduationCap, 
-  LayoutDashboard, 
+  Code2,
+  Smartphone,
+  ShoppingBag,
+  CreditCard,
+  Sparkles,
+  Bot,
+  ShieldCheck,
+  Radio,
+  GraduationCap,
+  LayoutDashboard,
   Wrench,
   Globe,
   Search,
@@ -81,7 +82,7 @@ export default function ServicesPage() {
   const filteredServices = useMemo(() => {
     return services.filter((service) => {
       const matchesCategory = activeCategory === 'All' || categoryMap[service.number] === activeCategory;
-      const matchesSearch = 
+      const matchesSearch =
         service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         service.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
         service.technologies.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -102,15 +103,15 @@ export default function ServicesPage() {
         {/* Balanced Two-Column Studio Layout */}
         <div className="studio-container py-8 sm:py-10 md:py-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
+
             {/* =================================================== */}
             {/* LEFT COLUMN: Main Overview, Trust & Actions         */}
             {/* =================================================== */}
             <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
-              
+
               {/* Primary Service Card */}
               <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-6 reveal-init" data-reveal>
-                
+
                 {/* Header Tag Bar with Back Arrow */}
                 <div className="flex items-center justify-between gap-2 pb-4 border-b border-slate-100">
                   <div className="flex items-center gap-2.5">
@@ -130,7 +131,7 @@ export default function ServicesPage() {
                       {categoryName}
                     </span>
                   </div>
-                  
+
                   <div className="w-11 h-11 rounded-xl bg-slate-950 text-sky-400 flex items-center justify-center shrink-0 shadow-sm border border-slate-800 transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-[0_8px_20px_rgba(56,189,248,0.25)] hover:border-sky-500/50 active:scale-95 cursor-pointer">
                     <Icon className="w-5 h-5 transition-transform duration-300 hover:scale-110" />
                   </div>
@@ -212,7 +213,7 @@ export default function ServicesPage() {
             {/* RIGHT COLUMN: Deliverables, Stack & Simple Process  */}
             {/* =================================================== */}
             <div className="lg:col-span-7 space-y-6">
-              
+
               {/* Deliverables Card (All 5 Items) */}
               <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-5 reveal-init" data-reveal>
                 <div className="flex items-center justify-between pb-4 border-b border-slate-100">
@@ -349,11 +350,11 @@ export default function ServicesPage() {
   // =========================================================================
   return (
     <div className="min-h-screen bg-slate-50/50">
-      
+
       {/* 1. HERO SECTION */}
       <section className="relative pt-12 pb-16 sm:pt-16 sm:pb-20 md:pt-20 md:pb-24 overflow-hidden bg-blueprint border-b border-slate-200">
         <div className="studio-container relative z-10 text-center max-w-3xl mx-auto reveal-init" data-reveal>
-          
+
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-xs text-xs font-mono text-sky-700 font-semibold mb-4 reveal-init">
             <Sparkles className="w-3.5 h-3.5 text-sky-600" />
@@ -361,7 +362,7 @@ export default function ServicesPage() {
           </div>
 
           {/* Main Title with text fade */}
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] text-slate-950 tracking-tight leading-[1.12] mb-4 text-fade-in">
+          <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-slate-950 tracking-tight leading-tight mb-4 text-fade-in">
             Clear, Reliable Software Services for Your Business
           </h1>
 
@@ -392,7 +393,7 @@ export default function ServicesPage() {
       <section className="sticky top-16 z-20 bg-white/95 backdrop-blur-md border-b border-slate-200 py-4 shadow-xs">
         <div className="studio-container">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            
+
             {/* Category Pills */}
             <div className="flex items-center gap-2 overflow-x-auto no-scrollbar w-full md:w-auto pb-1 md:pb-0">
               {categories.map((cat) => {
@@ -401,16 +402,14 @@ export default function ServicesPage() {
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
-                      isActive
-                        ? 'bg-slate-950 text-white shadow-sm'
-                        : 'bg-slate-100 hover:bg-slate-200/80 text-slate-600 hover:text-slate-950'
-                    }`}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${isActive
+                      ? 'bg-slate-950 text-white shadow-sm'
+                      : 'bg-slate-100 hover:bg-slate-200/80 text-slate-600 hover:text-slate-950'
+                      }`}
                   >
                     <span>{cat.label}</span>
-                    <span className={`text-[11px] px-2 py-0.5 rounded-md font-mono ${
-                      isActive ? 'bg-slate-800 text-sky-300' : 'bg-white text-slate-500'
-                    }`}>
+                    <span className={`text-[11px] px-2 py-0.5 rounded-md font-mono ${isActive ? 'bg-slate-800 text-sky-300' : 'bg-white text-slate-500'
+                      }`}>
                       {cat.count}
                     </span>
                   </button>
@@ -449,7 +448,7 @@ export default function ServicesPage() {
       {/* 3. SERVICES GRID */}
       <section className="py-12 sm:py-16">
         <div className="studio-container">
-          
+
           {filteredServices.length === 0 ? (
             <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 p-8 max-w-lg mx-auto">
               <Search className="w-8 h-8 text-slate-400 mx-auto mb-3" />
@@ -564,21 +563,21 @@ export default function ServicesPage() {
       {/* 4. HOW WE PARTNER / ENGAGEMENT MODELS */}
       <section className="py-14 sm:py-18 bg-white border-y border-slate-200">
         <div className="studio-container">
-          
+
           <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-xs font-mono text-slate-700 font-semibold mb-3">
               <span>FLEXIBLE ENGAGEMENT</span>
             </div>
             <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-slate-950">
-              How We Partner With You
+              Ways We Can Work Together
             </h2>
             <p className="text-slate-600 text-sm sm:text-base mt-2">
-              Every project is different. Choose the engagement framework that matches your development cycle and business goals.
+              Clear expectations, honest timelines, and zero surprises. Pick the way you want to work with us.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
+
             {/* Model 1 */}
             <div className="p-6 sm:p-7 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all flex flex-col justify-between">
               <div>
@@ -587,15 +586,13 @@ export default function ServicesPage() {
                 </div>
                 <div className="text-xs font-mono uppercase tracking-wider text-sky-700 font-bold">Model 01</div>
                 <h3 className="font-display font-bold text-lg text-slate-950 mt-1 mb-2">
-                  Milestone Sprints
+                  Fixed-Scope Project
                 </h3>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
-                  Fixed-scope 2–4 week engineering sprints with defined milestone deliverables. Perfect for MVPs, feature rollouts, and focused product modules.
+                  Best for websites, redesigns, and MVPs. We agree on a fixed price and timeline, share a live link to test every week, and you only approve and pay as milestones are completed.
                 </p>
               </div>
-              <div className="pt-4 border-t border-slate-200/80 text-xs font-mono text-slate-500">
-                Transparent milestones • Predictable delivery
-              </div>
+
             </div>
 
             {/* Model 2 */}
@@ -607,15 +604,13 @@ export default function ServicesPage() {
                 </div>
                 <div className="text-xs font-mono uppercase tracking-wider text-sky-400 font-bold">Model 02 • Most Popular</div>
                 <h3 className="font-display font-bold text-lg text-white mt-1 mb-2">
-                  Full-Cycle Product Build
+                  Full Product Build
                 </h3>
                 <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
-                  End-to-end technical architecture, system design, frontend & backend implementation, and production cloud launch with direct engineer access.
+                  From initial idea to live launch. We handle UI design, database setup, frontend, backend, payments, and deployment — with direct WhatsApp/Slack access to your developer.
                 </p>
               </div>
-              <div className="pt-4 border-t border-slate-800 text-xs font-mono text-sky-300">
-                Turnkey product release • Zero tech debt
-              </div>
+
             </div>
 
             {/* Model 3 */}
@@ -626,14 +621,11 @@ export default function ServicesPage() {
                 </div>
                 <div className="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Model 03</div>
                 <h3 className="font-display font-bold text-lg text-slate-950 mt-1 mb-2">
-                  Dedicated Retainer & Maintenance
+                  Monthly Retainer & Support
                 </h3>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
-                  Continuous development, security patching, database optimization, and priority feature iterations for launched web applications and SaaS platforms.
+                  For live websites and web apps that need a reliable developer on call. We build new features, run speed and security updates, and fix issues quickly without the cost of hiring full-time.
                 </p>
-              </div>
-              <div className="pt-4 border-t border-slate-200/80 text-xs font-mono text-slate-500">
-                Priority SLA support • Ongoing evolution
               </div>
             </div>
 
@@ -643,41 +635,14 @@ export default function ServicesPage() {
       </section>
 
       {/* 5. BOTTOM CTA BANNER */}
-      <section className="py-14 sm:py-20">
-        <div className="studio-container">
-          <div className="rounded-3xl bg-slate-950 text-white p-8 sm:p-12 text-center max-w-4xl mx-auto shadow-2xl border border-slate-800 relative overflow-hidden">
-            <div className="absolute -top-24 -right-24 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="relative z-10 space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 text-sky-400 flex items-center justify-center mx-auto mb-2">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl">
-                Ready to Build Your Next Digital Product?
-              </h2>
-              <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-                Tell us about your project requirements, timeline, and goals. We'll analyze your specifications and provide a realistic milestone breakdown.
-              </p>
-              <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link
-                  to="/contact"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-sm transition-all shadow-lg active:scale-98"
-                >
-                  <span>Start a Technical Conversation</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  to="/case-studies"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-sm transition-all active:scale-98"
-                >
-                  <span>Explore Case Studies</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <BottomCtaSection
+        title="Ready to Build Your Next Digital Product?"
+        description="Tell us about your project requirements, timeline, and goals. We'll analyze your specifications and provide a realistic milestone breakdown."
+        primaryBtnText="Start a Technical Conversation"
+        primaryBtnLink="/contact"
+        secondaryBtnText="Explore Case Studies"
+        secondaryBtnLink="/case-studies"
+      />
 
     </div>
   );

@@ -5,7 +5,7 @@ import { GithubIcon, LinkedinIcon } from '../common/BrandIcons';
 
 export default function TeamSection() {
   return (
-    <section id="about" className="py-16 sm:py-20 md:py-28 bg-[#f8fafc] border-b border-slate-200">
+    <section id="about" className="py-16 sm:py-20 md:py-20 bg-[#f8fafc] border-b border-slate-200">
       <div className="studio-container">
         <SectionHeader
           label="Founding Engineers"

@@ -88,7 +88,7 @@ export default function Navbar() {
                   AneHit
                 </span>
                 <span className="text-[10px] font-mono font-bold text-sky-700 bg-sky-50 border border-sky-200 px-1.5 py-0.5 rounded leading-none">
-                  STUDIO
+                  TECH
                 </span>
               </div>
               <span className="text-[11px] font-mono text-slate-500 tracking-wider uppercase font-semibold mt-0.5">
@@ -188,10 +188,15 @@ export default function Navbar() {
                 />
               </div>
               <div>
-                <span className="font-display font-extrabold text-lg text-slate-950 group-hover:text-sky-600 transition-colors block">
-                  AneHit
-                </span>
-                <span className="text-xs text-slate-500 uppercase tracking-wider block font-semibold">
+                <div className="flex items-center gap-1.5">
+                  <span className="font-display font-extrabold text-lg text-slate-950 group-hover:text-sky-600 transition-colors block">
+                    AneHit
+                  </span>
+                  <span className="text-[10px] font-mono font-bold text-sky-700 bg-sky-50 border border-sky-200 px-1.5 py-0.5 rounded leading-none">
+                    TECH
+                  </span>
+                </div>
+                <span className="text-xs text-slate-500 uppercase tracking-wider block font-semibold mt-0.5">
                   Ideas to Impact
                 </span>
               </div>

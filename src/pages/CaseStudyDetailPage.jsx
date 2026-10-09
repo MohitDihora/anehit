@@ -3,10 +3,18 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { caseStudies } from '../data/caseStudies';
 import { ArrowLeft, ArrowRight, CheckCircle2, ExternalLink, Terminal } from 'lucide-react';
 import ProjectMockupRenderer from '../components/ui/ProjectMockupRenderer';
+import BottomCtaSection from '../components/common/BottomCtaSection';
 
 export default function CaseStudyDetailPage() {
   const { studyId } = useParams();
-  const studyIndex = caseStudies.findIndex((s) => s.id === studyId);
+  const normalizedId = 
+    studyId === 'multitranslate-ai' ? 'bolo-translator' :
+    studyId === 'agenstory' ? 'gen-story' :
+    studyId === 'officialcoders' ? 'official-coders' :
+    studyId === 'online-examination-systems' ? 'online-examination-system' :
+    studyId;
+
+  const studyIndex = caseStudies.findIndex((s) => s.id === normalizedId);
 
   if (studyIndex === -1) {
     return <Navigate to="/case-studies" replace />;
@@ -55,7 +63,18 @@ export default function CaseStudyDetailPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-slate-900 hover:bg-sky-600 text-white font-semibold text-xs transition-colors shadow-xs"
                 >
-                  <span>View Live Project</span>
+                  <span>{study.adminUrl ? "View Student App" : "View Live Project"}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {study.adminUrl && (
+                <a
+                  href={study.adminUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-sky-50 hover:bg-sky-100 border border-sky-300 text-xs font-mono text-sky-800 font-semibold transition-colors shadow-xs"
+                >
+                  <span>View Admin Portal</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               )}
@@ -212,7 +231,7 @@ export default function CaseStudyDetailPage() {
         </div>
 
         {/* Bottom Next Case Study */}
-        <div className="mt-12 sm:mt-14 pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-12 sm:mt-14 pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 mb-12 sm:mb-16">
           <span className="font-mono text-xs text-slate-400 font-medium">
             NEXT CASE STUDY
           </span>
@@ -224,6 +243,17 @@ export default function CaseStudyDetailPage() {
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
+
+        {/* Bottom CTA Consultation Section */}
+        <BottomCtaSection 
+          title="Ready to Engineer a Similar Production System?"
+          description="Tell us about your system requirements, target architecture, or timeline. We'll provide a transparent scoping roadmap."
+          primaryBtnText="Discuss Architecture With Us"
+          primaryBtnLink="/contact"
+          secondaryBtnText="View All Case Studies"
+          secondaryBtnLink="/case-studies"
+          className="pb-4"
+        />
 
       </div>
     </div>

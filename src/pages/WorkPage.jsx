@@ -14,6 +14,7 @@ import {
 import ProjectMockupRenderer from '../components/ui/ProjectMockupRenderer';
 import ScrollStack, { ScrollStackItem } from '../components/ui/ScrollStack';
 import { projects, matchesProjectCategory } from '../data/projects';
+import BottomCtaSection from '../components/common/BottomCtaSection';
 
 export default function WorkPage() {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -217,6 +218,17 @@ export default function WorkPage() {
           })}
         </ScrollStack>
         )}
+
+        {/* Bottom CTA Consultation Section */}
+        <BottomCtaSection 
+          title="Have a Project with Similar Technical Demands?"
+          description="Whether you need a full-stack SaaS platform, high-converting showcase website, or custom AI integrations, our engineering team is ready to build it."
+          primaryBtnText="Start a Technical Conversation"
+          primaryBtnLink="/contact"
+          secondaryBtnText="Explore Our Services"
+          secondaryBtnLink="/services"
+          className="pt-16 sm:pt-24 pb-8"
+        />
 
       </div>
     </div>

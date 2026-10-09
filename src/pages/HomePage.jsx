@@ -6,6 +6,7 @@ import FeaturedWorkSection from '../components/home/FeaturedWorkSection';
 import WhyUsSection from '../components/home/WhyUsSection';
 import ProcessSection from '../components/home/ProcessSection';
 import FaqSection from '../components/home/FaqSection';
+import BottomCtaSection from '../components/common/BottomCtaSection';
 
 export default function HomePage() {
   return (
@@ -30,6 +31,16 @@ export default function HomePage() {
 
       {/* 10. Frequently Asked Questions */}
       <FaqSection />
+
+      {/* 11. Bottom CTA Consultation Section */}
+      <BottomCtaSection 
+        title="Ready to Build Your Next Digital Product?"
+        description="Tell us about your project requirements, timeline, and goals. We'll analyze your specifications and provide a realistic milestone breakdown."
+        primaryBtnText="Start a Technical Conversation"
+        primaryBtnLink="/contact"
+        secondaryBtnText="Explore Case Studies"
+        secondaryBtnLink="/case-studies"
+      />
     </div>
   );
 }

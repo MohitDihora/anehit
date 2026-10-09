@@ -5,7 +5,7 @@ export const faqs = [
   },
   {
     question: "What is your typical timeline for project delivery?",
-    answer: "Timelines depend on the scope of work. A clean, responsive business website typically ships in 2 to 3 weeks. A custom web application, dashboard, or AI-integrated software usually takes 4 to 8 weeks. We share live staging demos every week so you always see steady, tangible progress."
+    answer: "Timelines depend on the scope of work. A clean, responsive business website typically ships in 4 to 5 weeks. A custom web application, dashboard, or AI-integrated software usually takes 5 to 8 weeks. We share live staging demos every week so you always see steady, tangible progress."
   },
   {
     question: "How do we communicate and track progress during development?",

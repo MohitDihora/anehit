@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  ArrowUpRight, 
-  MessageSquare, 
-  ShieldCheck, 
-  Clock, 
-  ExternalLink, 
-  CheckCircle2, 
-  Mail, 
-  Copy, 
-  Check, 
+import {
+  ArrowUpRight,
+  MessageSquare,
+  ShieldCheck,
+  Clock,
+  ExternalLink,
+  CheckCircle2,
+  Mail,
+  Copy,
+  Check,
   Sparkles,
   Zap
 } from 'lucide-react';
@@ -25,7 +25,7 @@ export default function FinalCtaSection() {
   };
 
   return (
-    <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden bg-[#0a0f1d] border-b border-slate-800 text-white">
+    <section className="py-16 sm:py-20 md:py-20 relative overflow-hidden bg-[#0a0f1d] border-b border-slate-800 text-white">
       {/* Background architectural grid and ambient glow */}
       <div className="absolute inset-0 bg-engineering-dark opacity-75 pointer-events-none" />
       <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-sky-500/10 blur-[130px] rounded-full pointer-events-none" />
@@ -33,7 +33,7 @@ export default function FinalCtaSection() {
 
       <div className="studio-container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          
+
           {/* Left Column: Studio Manifesto & Value Proposition */}
           <div className="lg:col-span-7 space-y-6 sm:space-y-7">
             {/* Availability Pill */}

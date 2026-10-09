@@ -89,7 +89,7 @@ export default function HeroPerspectiveTunnel() {
             </div>
             <div>
               <div className="text-[10px] font-mono uppercase text-purple-200">Creative Suite</div>
-              <div className="text-xs sm:text-sm font-bold mt-0.5">AgenStory AI</div>
+              <div className="text-xs sm:text-sm font-bold mt-0.5">Gen Story AI</div>
               <div className="text-[10px] text-purple-100/70 mt-1">Generative narrative platform</div>
             </div>
           </div>

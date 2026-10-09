@@ -1,198 +1,289 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  ArrowUpRight, 
-  MessageSquare, 
-  Compass, 
-  Sparkles, 
-  Zap, 
-  ShieldCheck, 
-  CheckCircle2 
+import BottomCtaSection from '../components/common/BottomCtaSection';
+import {
+  ArrowUpRight,
+  CheckCircle2,
+  Code2,
+  Layers,
+  Cpu,
+  Globe2,
+  ShieldCheck,
+  KeyRound,
+  Headphones,
+  Clock,
+  FileCheck,
+  Lock,
+  Terminal,
+  Zap,
+  Sparkles
 } from 'lucide-react';
 
+function CounterNumber({ target, duration = 1500, suffix = '', prefix = '' }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTime = null;
+    let frameId = null;
+
+    // Quartic ease-out curve for smooth deceleration
+    const easeOutQuart = (x) => 1 - Math.pow(1 - x, 4);
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = easeOutQuart(progress);
+
+      setCount(Math.round(eased * target));
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(animate);
+      } else {
+        setCount(target);
+      }
+    };
+
+    frameId = requestAnimationFrame(animate);
+
+    return () => {
+      if (frameId) cancelAnimationFrame(frameId);
+    };
+  }, [target, duration]);
+
+  return (
+    <span className="tabular-nums">
+      {prefix}{count}{suffix}
+    </span>
+  );
+}
+
 export default function AboutPage() {
-  const coreValues = [
+  const stats = [
+    { label: "Direct Engineer Access", target: 100, suffix: "%", duration: 1400 },
+    { label: "Code & IP Ownership", target: 100, suffix: "%", duration: 1500 },
+    { label: "Working Preview Cadence", target: 7, suffix: " Days", duration: 1200 },
+    { label: "Client Retain & Referral Rate", target: 96, suffix: "%", duration: 1600 },
+  ];
+
+  const operatingPrinciples = [
     {
-      icon: MessageSquare,
-      title: "Direct & Honest Communication",
-      description: "You talk directly with the engineers building your product. No account managers, no confusing jargon, and no lost details in translation."
+      title: "We estimate honestly, even when it costs us the project",
+      description: "If a timeline is unrealistic or a budget won't cover the scope properly, we say so before starting — not three sprints in."
     },
     {
-      icon: Zap,
-      title: "Fast, Thoughtful Iterations",
-      description: "We work in small, focused sprints with quick turnaround times. You see continuous progress and interactive previews every single week."
+      title: "Clean, proven architecture beats clever hacks",
+      description: "The system that is still running flawlessly in five years is built on well-understood, documented patterns — not fragile shortcuts."
     },
     {
-      icon: ShieldCheck,
-      title: "Craft Over Shortcuts",
-      description: "We write clean, well-tested, and maintainable code. Your software is built on solid foundations so it scales gracefully as your business grows."
-    },
-    {
-      icon: Compass,
-      title: "Genuine Technical Partnership",
-      description: "We treat your project like our own. If there is a simpler, more cost-effective way to achieve your goal, we'll recommend it upfront."
+      title: "You own everything we build from day one",
+      description: "Source code, Git repositories, database schemas, and cloud accounts are 100% yours. No dependency on us to keep your business running."
     }
   ];
 
-  const collaborationSteps = [
+  const capabilities = [
     {
-      step: "01",
-      title: "Listen & Understand",
-      desc: "We start by deeply understanding your goals, your target audience, and the problem you want to solve before writing any code."
+      tag: "Web Apps",
+      title: "Full-Stack Web Applications",
+      desc: "Custom SaaS platforms, dashboards, and client portals built with React, Next.js, Node.js, and modern databases."
     },
     {
-      step: "02",
-      title: "Clear Plan & Milestones",
-      desc: "You get a straightforward roadmap with realistic timelines, defined deliverables, and transparent estimates with zero surprises."
+      tag: "Websites",
+      title: "High-Performance Websites",
+      desc: "Fast, responsive showcase and marketing websites engineered for high conversion, search visibility, and instant load speeds."
     },
     {
-      step: "03",
-      title: "Build & Share Previews",
-      desc: "We build in public with interactive staging links, allowing you to test, touch, and give feedback on features as they are crafted."
+      tag: "AI & Tools",
+      title: "AI & Workflow Automation",
+      desc: "Intelligent chatbots, LLM agent integrations, and automated pipelines that save hours of repetitive manual operations."
     },
     {
-      step: "04",
-      title: "Launch & Reliable Support",
-      desc: "We rigorously test across devices, handle production deployment, and remain by your side to make sure everything runs smoothly."
+      tag: "Backend & Cloud",
+      title: "API & Cloud Engineering",
+      desc: "Secure RESTful/GraphQL APIs, third-party payment gateways, authentication layers, and reliable cloud deployments."
+    }
+  ];
+
+  const clientTerms = [
+    {
+      icon: KeyRound,
+      title: "100% IP & Asset Ownership",
+      detail: "Full ownership of source code, design files, and infrastructure accounts. Zero vendor lock-in."
+    },
+    {
+      icon: FileCheck,
+      title: "Transparent Milestone Billing",
+      detail: "Clear milestones with agreed deliverables. You review and approve each stage before release."
+    },
+    {
+      icon: Headphones,
+      title: "Direct Engineer Communication",
+      detail: "Direct access via Slack, WhatsApp, or Email. You talk directly with the developers writing your code."
+    },
+    {
+      icon: Lock,
+      title: "Confidentiality & Mutual NDA",
+      detail: "Your proprietary logic, product blueprints, and user data are strictly confidential and protected."
+    },
+    {
+      icon: Clock,
+      title: "Included Post-Launch Warranty",
+      detail: "Every launch includes dedicated bug-fixing and monitoring to guarantee operational stability."
+    },
+    {
+      icon: ShieldCheck,
+      title: "Zero Outsourcing Guarantee",
+      detail: "Every line of code and architectural decision is crafted hands-on by our senior engineering team."
     }
   ];
 
   return (
     <div className="py-12 sm:py-16 md:py-24 bg-blueprint">
       <div className="studio-container">
-        
-        {/* Page Header */}
-        <div className="max-w-3xl mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-mono text-sky-700 mb-5 shadow-xs">
+
+        {/* Page Header (Centered) */}
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-mono text-sky-700 mb-4 shadow-xs font-semibold">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>WHO WE ARE & HOW WE WORK</span>
+            <span>ABOUT · ANEHIT TECH</span>
           </div>
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-slate-950 tracking-tight mb-5 leading-[1.15]">
-            Thoughtful engineering for people building ambitious things.
+          <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-slate-950 tracking-tight mb-4 sm:mb-5 leading-tight">
+            Production software engineered to last. Zero agency bloat.
           </h1>
-          <p className="text-slate-600 text-base sm:text-lg leading-relaxed mb-6">
-            We are an independent software development studio focused on crafting fast, dependable websites, web applications, and AI integrations. We believe great software is born from clear communication, honest collaboration, and building with genuine care.
+          <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-4">
+            AneHit Tech was started with a simple belief: modern software should be judged by how reliably it works in production, not just by how flashy it looks in a sales pitch.
           </p>
-          <div className="flex flex-wrap gap-4 text-xs font-medium text-slate-600 pt-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 shadow-2xs">
-              <CheckCircle2 className="w-4 h-4 text-sky-600" />
-              100% Direct Developer Access
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 shadow-2xs">
-              <CheckCircle2 className="w-4 h-4 text-sky-600" />
-              No Middleman Overhead
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 shadow-2xs">
-              <CheckCircle2 className="w-4 h-4 text-sky-600" />
-              Clean, Scalable Codebases
-            </span>
-          </div>
+          <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+            We operate as a focused engineering duo partnering directly with founders, startups, and growing businesses. No middle account managers, no communication lag, and no outsourced junior developers. Just direct technical craft, clear terms, and fast execution.
+          </p>
         </div>
 
-        {/* Our Studio Philosophy & Why It Matters */}
-        <div className="studio-card p-6 sm:p-8 md:p-10 border-slate-200 bg-white mb-12 sm:mb-14 shadow-sm">
-          <div className="max-w-3xl space-y-4 mb-8">
-            <div className="text-xs font-mono text-sky-700 uppercase tracking-wider font-semibold">
-              Our Philosophy
+        {/* Stat Metric Strip - Full Width & Spacious */}
+        <dl className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-16 sm:mb-20">
+          {stats.map((stat, idx) => (
+            <div key={idx} className="studio-card p-6 sm:p-7">
+              <dt className="font-mono text-[11px] sm:text-xs uppercase tracking-wide text-slate-500 mb-2 font-semibold">
+                {stat.label}
+              </dt>
+              <dd className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-950">
+                <CounterNumber
+                  target={stat.target}
+                  suffix={stat.suffix}
+                  duration={stat.duration}
+                />
+              </dd>
             </div>
-            <h2 className="font-display font-bold text-2xl sm:text-3xl text-slate-950">
-              Why We Keep Our Studio Hands-On & Independent
-            </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              In traditional agencies, client visions often get diluted. Your ideas pass through account executives, sales reps, and project coordinators before reaching junior developers you never speak with. Misunderstandings happen, velocity slows down, and the craft suffers.
-            </p>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              At <strong className="text-slate-900 font-semibold">AneHit IT Tech</strong>, we operate on a fundamentally different model: you collaborate directly with the engineers who design your database, write your code, and deploy your product. No middle layers. No lost context. Just honest craftsmanship and clear results.
-            </p>
+          ))}
+        </dl>
+
+        {/* FIG. 01: How We Work / Core Principles */}
+        <section className="mb-16 sm:mb-20">
+          <div className="flex items-center gap-3 mb-6 sm:mb-8">
+            <span className="font-mono text-xs text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded font-bold">
+              FIG. 01
+            </span>
+            <span className="font-mono text-xs tracking-[0.2em] uppercase text-slate-500 font-semibold">
+              How We Work
+            </span>
+            <span className="flex-1 h-px bg-slate-200" aria-hidden="true" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-8 border-t border-slate-100">
-            {coreValues.map((value, idx) => {
-              const Icon = value.icon;
-              return (
-                <div key={idx} className="space-y-3">
-                  <div className="w-10 h-10 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 shadow-2xs">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-display font-bold text-base text-slate-900">
-                    {value.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    {value.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Working Style Breakdown */}
-        <div className="studio-card p-6 sm:p-8 md:p-10 border-slate-200 bg-white mb-12 sm:mb-14 shadow-sm">
-          <div className="max-w-2xl mb-8">
-            <div className="text-xs font-mono text-sky-700 uppercase tracking-wider font-semibold mb-2">
-              The Journey
-            </div>
-            <h2 className="font-display font-bold text-2xl sm:text-3xl text-slate-950 mb-3">
-              What It Feels Like To Work With Us
-            </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              We believe building software should be an enjoyable, transparent, and collaborative process. Here is how we turn your vision into reality.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {collaborationSteps.map((style, idx) => (
-              <div 
-                key={idx} 
-                className="p-5 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-slate-300 transition-colors flex flex-col justify-between"
+          <div className="grid md:grid-cols-3 gap-6">
+            {operatingPrinciples.map((principle, idx) => (
+              <div
+                key={idx}
+                className="studio-card p-6 sm:p-8 flex flex-col justify-between hover:border-slate-300 transition-all"
               >
                 <div>
-                  <div className="font-mono text-xs font-bold text-sky-700 mb-2.5 flex items-center justify-between">
-                    <span>STEP {style.step}</span>
-                    <span className="w-2 h-2 rounded-full bg-sky-200" />
-                  </div>
-                  <h4 className="font-display font-bold text-base text-slate-900 mb-2">
-                    {style.title}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    {style.desc}
+                  <h2 className="font-display font-bold text-slate-950 text-lg sm:text-xl mb-3">
+                    {principle.title}
+                  </h2>
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                    {principle.description}
                   </p>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Human-Friendly CTA */}
-        <div className="studio-card p-8 sm:p-10 md:p-12 border-slate-200 bg-linear-to-br from-white via-slate-50 to-sky-50/30 text-center shadow-sm">
-          <div className="max-w-2xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 border border-sky-100 text-xs font-mono text-sky-700 font-medium">
-              <Sparkles className="w-3.5 h-3.5 text-sky-600" />
-              <span>HAVE A PROJECT IN MIND?</span>
-            </div>
-            <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-950 tracking-tight">
-              Let's have a simple, no-pressure conversation.
-            </h3>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
-              Whether you're starting from scratch with a brand new idea, modernizing an existing app, or exploring AI features, we'd love to hear about it.
-            </p>
-            <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-950 hover:bg-sky-600 text-white font-semibold text-sm transition-all shadow-sm hover:shadow-md"
-              >
-                <span>Start a Conversation</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/work"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-800 font-semibold text-sm border border-slate-200 transition-colors shadow-xs"
-              >
-                <span>Explore Our Work</span>
-              </Link>
-            </div>
+        {/* FIG. 02: Specialized Capabilities */}
+        <section className="mb-16 sm:mb-20">
+          <div className="flex items-center gap-3 mb-6 sm:mb-8">
+            <span className="font-mono text-xs text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded font-bold">
+              FIG. 02
+            </span>
+            <span className="font-mono text-xs tracking-[0.2em] uppercase text-slate-500 font-semibold">
+              Specialized Capabilities
+            </span>
+            <span className="flex-1 h-px bg-slate-200" aria-hidden="true" />
           </div>
-        </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {capabilities.map((item, idx) => (
+              <div
+                key={idx}
+                className="studio-card p-6 sm:p-7 hover:border-sky-300 transition-all group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-mono font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-1 rounded">
+                      {item.tag}
+                    </span>
+                  </div>
+                  <h3 className="font-display font-bold text-slate-900 text-base sm:text-lg mb-2.5 group-hover:text-sky-600 transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* FIG. 03: Transparent Working Terms */}
+        <section className="mb-16 sm:mb-20">
+          <div className="flex items-center gap-3 mb-6 sm:mb-8">
+            <span className="font-mono text-xs text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded font-bold">
+              FIG. 03
+            </span>
+            <span className="font-mono text-xs tracking-[0.2em] uppercase text-slate-500 font-semibold">
+              Client Terms & Guarantees
+            </span>
+            <span className="flex-1 h-px bg-slate-200" aria-hidden="true" />
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {clientTerms.map((term, idx) => {
+              const Icon = term.icon;
+              return (
+                <div key={idx} className="studio-card p-6 sm:p-7 space-y-3 hover:border-sky-200 transition-all">
+                  <div className="w-10 h-10 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-700">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-display font-bold text-slate-900 text-base sm:text-lg">
+                    {term.title}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    {term.detail}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Bottom CTA Consultation Section */}
+        <BottomCtaSection
+          title="Ready to Build Your Next Digital Product?"
+          description="Tell us about your project requirements, timeline, and goals. We'll analyze your specifications and provide a realistic milestone breakdown."
+          primaryBtnText="Start a Technical Conversation"
+          primaryBtnLink="/contact"
+          secondaryBtnText="Explore Case Studies"
+          secondaryBtnLink="/case-studies"
+          className="pt-4 pb-4"
+        />
 
       </div>
     </div>

@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Code2, 
-  Smartphone, 
-  ShoppingBag, 
-  CreditCard, 
-  Sparkles, 
-  Bot, 
-  ShieldCheck, 
-  Radio, 
-  GraduationCap, 
-  LayoutDashboard, 
-  Wrench, 
+import {
+  Code2,
+  Smartphone,
+  ShoppingBag,
+  CreditCard,
+  Sparkles,
+  Bot,
+  ShieldCheck,
+  Radio,
+  GraduationCap,
+  LayoutDashboard,
+  Wrench,
   ArrowUpRight
 } from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
@@ -39,9 +39,9 @@ export default function ServicesSection() {
   const displayedServices = services.slice(0, 6);
 
   return (
-    <section id="services" className="py-14 sm:py-18 md:py-24 bg-[#f8fafc] border-b border-slate-200">
+    <section id="services" className="py-14 sm:py-18 md:py-20 bg-[#f8fafc] border-b border-slate-200">
       <div className="studio-container">
-        
+
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-10 gap-4">
           <SectionHeader
@@ -118,24 +118,6 @@ export default function ServicesSection() {
           })}
         </div>
 
-        {/* Compact Scoping Callout Strip */}
-        <div className="mt-8 sm:mt-10 p-5 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <h4 className="font-display font-bold text-slate-900 text-sm sm:text-base">
-              Have a unique project or need a custom mix of services?
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-500">
-              Tell us what you want to build. We'll give you honest technical advice, clear milestones, and a fixed quote—no jargon.
-            </p>
-          </div>
-          <Link
-            to="/contact"
-            className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-sky-600 text-white text-xs font-semibold whitespace-nowrap transition-colors flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer active:scale-95"
-          >
-            <span>Discuss Your Project</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
       </div>
     </section>
   );

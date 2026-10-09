@@ -165,7 +165,7 @@ export const ScrollStack = ({
         })}
       </div>
       {/* Spacer to give the final pinned stack room before continuing */}
-      <div className="w-full h-24 sm:h-32 pointer-events-none" />
+      <div className="w-full h-24 sm:h-20 pointer-events-none" />
     </div>
   );
 };

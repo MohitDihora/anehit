@@ -14,7 +14,7 @@ export default function FeaturedWorkSection() {
   const displayedProjects = projects.slice(0, 2);
 
   return (
-    <section id="case-studies" className="py-16 sm:py-20 md:py-28 bg-[#f8fafc] border-b border-slate-200">
+    <section id="case-studies" className="py-16 sm:py-20 md:py-20 bg-[#f8fafc] border-b border-slate-200">
       <div className="studio-container">
 
         {/* Header with Opposite CTA - Centered vertically across the header title */}
@@ -56,7 +56,7 @@ export default function FeaturedWorkSection() {
                 itemClassName="bg-white border border-slate-200/90 hover:border-slate-300 transition-colors p-6 sm:p-8 lg:p-10 shadow-[0_14px_45px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)]"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                  
+
                   {/* Info Column */}
                   <div className={`space-y-5 lg:col-span-5 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
                     {/* Index & Category Badges with Readable Fonts */}
